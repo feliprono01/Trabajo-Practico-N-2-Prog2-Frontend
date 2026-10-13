@@ -1,0 +1,92 @@
+// Include theming for Angular Material with `mat.theme()`.
+// This Sass mixin will define CSS variables that are used for styling Angular Material
+// components according to the Material 3 design spec.
+// Learn more about theming and how to use it for your application's
+// custom components at https://material.angular.dev/guide/theming
+@use '@angular/material' as mat;
+
+html {
+  height: 100%;
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$blue-palette,
+        tertiary: mat.$azure-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
+
+  // Paleta sobria (gris azulado / navy) en lugar del azul saturado por
+  // defecto, para un look más corporativo. Se pisan los tokens de color
+  // de sistema que genera mat.theme() de arriba.
+  --mat-sys-primary: #1f2d3d;
+  --mat-sys-on-primary: #ffffff;
+  --mat-sys-primary-container: #e7ebef;
+  --mat-sys-on-primary-container: #1f2d3d;
+  --mat-sys-inverse-primary: #aab7c4;
+
+  --mat-sys-secondary: #51606e;
+  --mat-sys-on-secondary: #ffffff;
+  --mat-sys-secondary-container: #eef1f3;
+  --mat-sys-on-secondary-container: #33404b;
+
+  --mat-sys-surface: #ffffff;
+  --mat-sys-surface-dim: #e6e7e9;
+  --mat-sys-surface-bright: #ffffff;
+  --mat-sys-surface-container-lowest: #ffffff;
+  --mat-sys-surface-container-low: #f7f8f9;
+  --mat-sys-surface-container: #f2f3f5;
+  --mat-sys-surface-container-high: #ececee;
+  --mat-sys-surface-container-highest: #e6e7e9;
+  --mat-sys-surface-variant: #e1e5e9;
+  --mat-sys-on-surface: #1c1f23;
+  --mat-sys-on-surface-variant: #5b6470;
+
+  --mat-sys-background: #f5f6f7;
+  --mat-sys-on-background: #1c1f23;
+
+  --mat-sys-outline: #ccd2d8;
+  --mat-sys-outline-variant: #e1e5e9;
+
+  // Bordes suaves pero contenidos (ni "pill" ni totalmente rectos).
+  --mat-sys-corner-extra-small: 6px;
+  --mat-sys-corner-small: 8px;
+  --mat-sys-corner-medium: 10px;
+  --mat-sys-corner-large: 14px;
+  --mat-sys-corner-extra-large: 16px;
+
+  --mat-button-filled-container-shape: 8px;
+  --mat-button-outlined-container-shape: 8px;
+  --mat-button-protected-container-shape: 8px;
+  --mat-button-text-container-shape: 8px;
+  --mat-button-tonal-container-shape: 8px;
+
+  // Sombras más sutiles (menos "cargadas").
+  --mat-sys-level0: none;
+  --mat-sys-level1: 0 1px 2px rgba(16, 24, 32, 0.06);
+  --mat-sys-level2: 0 1px 3px rgba(16, 24, 32, 0.08);
+  --mat-sys-level3: 0 2px 6px rgba(16, 24, 32, 0.1);
+  --mat-sys-level4: 0 2px 6px rgba(16, 24, 32, 0.1);
+  --mat-sys-level5: 0 2px 6px rgba(16, 24, 32, 0.1);
+}
+
+body {
+  // Default the application to a light color theme. This can be changed to
+  // `dark` to enable the dark color theme, or to `light dark` to defer to the
+  // user's system settings.
+  color-scheme: light;
+
+  // Set a default background, font and text colors for the application using
+  // Angular Material's system-level CSS variables. Learn more about these
+  // variables at https://material.angular.dev/guide/system-variables
+  background-color: var(--mat-sys-background);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
+
+  // Reset the user agent margin.
+  margin: 0;
+  height: 100%;
+}
+/* You can add global styles to this file, and also import other style files */

@@ -1,0 +1,39 @@
+.estado-page {
+  display: flex;
+  justify-content: center;
+  padding: 72px 24px;
+}
+
+.estado-card {
+  max-width: 420px;
+  text-align: center;
+  padding: 32px 24px;
+
+  h2 {
+    margin: 0 0 8px;
+    font: var(--mat-sys-title-large);
+  }
+
+  p {
+    margin: 0 0 20px;
+    color: var(--mat-sys-on-surface-variant);
+  }
+}
+
+.estado-icono-circulo {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  background-color: var(--mat-sys-surface-container-high);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  mat-icon {
+    font-size: 32px;
+    width: 32px;
+    height: 32px;
+    color: var(--mat-sys-on-surface-variant);
+  }
+}

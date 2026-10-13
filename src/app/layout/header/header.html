@@ -1,0 +1,36 @@
+<mat-toolbar class="header-toolbar">
+  @if (mostrarToggleMenu) {
+    <button mat-icon-button (click)="toggleMenu.emit()" aria-label="Abrir menú">
+      <mat-icon>menu</mat-icon>
+    </button>
+  }
+
+  <a routerLink="/" class="brand">
+    <mat-icon>local_hospital</mat-icon>
+    <span class="brand-nombre">Clínica Virtual</span>
+  </a>
+
+  <span class="spacer"></span>
+
+  @if (!usuario()) {
+    <span class="bienvenida">Bienvenido a la clínica virtual</span>
+  } @else {
+    <button mat-icon-button matTooltip="Notificaciones" aria-label="Notificaciones">
+      <mat-icon>notifications</mat-icon>
+    </button>
+
+    @if (usuario(); as u) {
+      <div class="usuario-chip" [matTooltip]="rolLabel()">
+        <span class="usuario-avatar">{{ iniciales() }}</span>
+        <span class="usuario-info">
+          <span class="usuario-nombre">{{ u.nombre }} {{ u.apellido }}</span>
+          <span class="usuario-rol">{{ rolLabel() }}</span>
+        </span>
+      </div>
+
+      <button mat-icon-button matTooltip="Cerrar sesión" aria-label="Cerrar sesión" (click)="cerrarSesion()">
+        <mat-icon>logout</mat-icon>
+      </button>
+    }
+  }
+</mat-toolbar>

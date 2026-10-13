@@ -1,0 +1,114 @@
+.perfil-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 24px 48px;
+}
+
+.page-header {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 0 40px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+
+  h1 {
+    margin: 0;
+    font: var(--mat-sys-headline-small);
+  }
+}
+
+.perfil-card {
+  width: 100%;
+  max-width: 560px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.perfil-encabezado {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 24px;
+  background-color: var(--mat-sys-tertiary-container);
+
+  h2 {
+    margin: 0 0 6px;
+    font: var(--mat-sys-title-large);
+    color: var(--mat-sys-on-tertiary-container);
+  }
+}
+
+.perfil-avatar {
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background-color: var(--mat-sys-primary);
+  color: var(--mat-sys-on-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  font-weight: 600;
+  box-shadow: var(--mat-sys-level1);
+}
+
+.perfil-rol {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: var(--mat-sys-corner-extra-large);
+  background-color: var(--mat-sys-tertiary);
+  color: var(--mat-sys-on-tertiary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.perfil-datos {
+  margin: 0;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.dato {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: var(--mat-sys-corner-medium);
+  background-color: var(--mat-sys-surface-container-low);
+
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    margin-top: 2px;
+    color: var(--mat-sys-tertiary);
+  }
+
+  dt {
+    font: var(--mat-sys-label-medium);
+    color: var(--mat-sys-on-surface-variant);
+    margin-bottom: 2px;
+  }
+
+  dd {
+    margin: 0;
+    font: var(--mat-sys-body-large);
+  }
+}
+
+.centrado {
+  display: flex;
+  justify-content: center;
+  padding: 48px;
+}
+
+.error {
+  text-align: center;
+  color: var(--mat-sys-error, #b3261e);
+}

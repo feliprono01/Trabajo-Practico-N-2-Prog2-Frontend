@@ -1,0 +1,38 @@
+@if (!usuario()) {
+  <section class="hero">
+    <div class="hero-text">
+      <h1>Tu clínica, a un clic de distancia</h1>
+      <p>
+        Registrate como paciente, pedí turnos con nuestros especialistas, revisá tu
+        historia clínica y seguí tus próximos turnos, todo desde un mismo lugar.
+      </p>
+      <div class="hero-actions">
+        <a mat-flat-button routerLink="/login">
+          <mat-icon>login</mat-icon>
+          Iniciar sesión
+        </a>
+        <a mat-stroked-button routerLink="/registro">
+          <mat-icon>person_add</mat-icon>
+          Registrarme
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="funcionalidades">
+    @for (f of funcionalidades; track f.titulo) {
+      <mat-card appearance="outlined" class="funcionalidad-card">
+        <mat-icon class="funcionalidad-icono">{{ f.icono }}</mat-icon>
+        <h3>{{ f.titulo }}</h3>
+        <p>{{ f.descripcion }}</p>
+      </mat-card>
+    }
+  </section>
+} @else {
+  <section class="hero hero--sesion">
+    <div class="hero-text">
+      <h1>Hola, {{ usuario()?.nombre }}</h1>
+      <p>Elegí una función del menú para continuar.</p>
+    </div>
+  </section>
+}

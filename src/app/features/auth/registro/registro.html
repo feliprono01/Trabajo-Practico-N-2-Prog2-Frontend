@@ -1,0 +1,111 @@
+<div class="registro-page">
+<mat-card appearance="outlined" class="registro-card">
+  <div class="registro-encabezado">
+    <div class="registro-icono-circulo">
+      <mat-icon>person_add</mat-icon>
+    </div>
+    <h2>Registro de paciente</h2>
+    <p class="registro-subtitulo">Completá tus datos para crear tu cuenta</p>
+  </div>
+
+    <form [formGroup]="form" (ngSubmit)="enviar()" class="registro-form">
+      <div class="campo-fila">
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="nombre" />
+          @if (form.controls.nombre.hasError('required') && form.controls.nombre.touched) {
+            <mat-error>El nombre es obligatorio</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Apellido</mat-label>
+          <input matInput formControlName="apellido" />
+          @if (form.controls.apellido.hasError('required') && form.controls.apellido.touched) {
+            <mat-error>El apellido es obligatorio</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <div class="campo-fila">
+        <mat-form-field appearance="outline">
+          <mat-label>DNI</mat-label>
+          <input matInput formControlName="dni" inputmode="numeric" />
+          @if (form.controls.dni.hasError('required') && form.controls.dni.touched) {
+            <mat-error>El DNI es obligatorio</mat-error>
+          }
+          @if (form.controls.dni.hasError('pattern') && form.controls.dni.touched) {
+            <mat-error>DNI numérico (7 a 9 dígitos)</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" formControlName="email" />
+          @if (form.controls.email.hasError('required') && form.controls.email.touched) {
+            <mat-error>El email es obligatorio</mat-error>
+          }
+          @if (form.controls.email.hasError('email') && form.controls.email.touched) {
+            <mat-error>Ingresá un email válido</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <div class="campo-fila">
+        <mat-form-field appearance="outline">
+          <mat-label>Contraseña</mat-label>
+          <input matInput type="password" formControlName="password" />
+          @if (form.controls.password.hasError('required') && form.controls.password.touched) {
+            <mat-error>La contraseña es obligatoria</mat-error>
+          }
+          @if (form.controls.password.hasError('minlength') && form.controls.password.touched) {
+            <mat-error>Mínimo 6 caracteres</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Fecha de nacimiento</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="fecha_nacimiento" />
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          @if (form.controls.fecha_nacimiento.hasError('required') && form.controls.fecha_nacimiento.touched) {
+            <mat-error>Obligatoria</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <div class="campo-fila">
+        <mat-form-field appearance="outline">
+          <mat-label>Cobertura</mat-label>
+          <mat-select formControlName="id_cobertura">
+            @for (cobertura of coberturas(); track cobertura.id) {
+              <mat-option [value]="cobertura.id">{{ cobertura.nombre }}</mat-option>
+            }
+          </mat-select>
+          @if (form.controls.id_cobertura.hasError('required') && form.controls.id_cobertura.touched) {
+            <mat-error>Seleccioná una cobertura</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Teléfono (opcional)</mat-label>
+          <input matInput formControlName="telefono" />
+        </mat-form-field>
+      </div>
+
+      @if (errorMensaje()) {
+        <p class="error-backend">{{ errorMensaje() }}</p>
+      }
+
+      <button mat-flat-button type="submit" [disabled]="cargando()">
+        @if (cargando()) {
+          <mat-spinner diameter="20"></mat-spinner>
+        } @else {
+          Registrarme
+        }
+      </button>
+
+      <p class="registro-link">¿Ya tenés cuenta? <a routerLink="/login">Iniciá sesión</a></p>
+    </form>
+</mat-card>
+</div>

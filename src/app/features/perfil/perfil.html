@@ -1,0 +1,72 @@
+@if (cargando()) {
+  <div class="centrado">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+} @else if (error()) {
+  <p class="error">{{ error() }}</p>
+} @else if (perfil(); as p) {
+  <div class="perfil-page">
+    <div class="page-header">
+      <h1>Mi perfil</h1>
+    </div>
+
+    <mat-card appearance="outlined" class="perfil-card">
+      <div class="perfil-encabezado">
+        <div class="perfil-avatar">{{ iniciales(p) }}</div>
+        <div>
+          <h2>{{ p.nombre }} {{ p.apellido }}</h2>
+          <span class="perfil-rol">{{ rolLabel(p.rol) }}</span>
+        </div>
+      </div>
+
+      <dl class="perfil-datos">
+        <div class="dato">
+          <mat-icon>badge</mat-icon>
+          <div>
+            <dt>DNI</dt>
+            <dd>{{ p.dni }}</dd>
+          </div>
+        </div>
+        <div class="dato">
+          <mat-icon>mail</mat-icon>
+          <div>
+            <dt>Email</dt>
+            <dd>{{ p.email }}</dd>
+          </div>
+        </div>
+        <div class="dato">
+          <mat-icon>call</mat-icon>
+          <div>
+            <dt>Teléfono</dt>
+            <dd>{{ p.telefono || '-' }}</dd>
+          </div>
+        </div>
+        <div class="dato">
+          <mat-icon>cake</mat-icon>
+          <div>
+            <dt>Fecha de nacimiento</dt>
+            <dd>{{ p.fecha_nacimiento | slice:0:10 }}</dd>
+          </div>
+        </div>
+        @if (p.cobertura) {
+          <div class="dato">
+            <mat-icon>health_and_safety</mat-icon>
+            <div>
+              <dt>Cobertura</dt>
+              <dd>{{ p.cobertura }}</dd>
+            </div>
+          </div>
+        }
+        @if (p.sede) {
+          <div class="dato">
+            <mat-icon>location_on</mat-icon>
+            <div>
+              <dt>Sede</dt>
+              <dd>{{ p.sede }}</dd>
+            </div>
+          </div>
+        }
+      </dl>
+    </mat-card>
+  </div>
+}

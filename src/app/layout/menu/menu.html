@@ -1,0 +1,10 @@
+@if (usuario()) {
+  <nav class="app-menu">
+    @for (item of items(); track item.ruta) {
+      <a [routerLink]="item.ruta" routerLinkActive="activo" (click)="itemClick.emit()">
+        <mat-icon>{{ item.icono }}</mat-icon>
+        <span>{{ item.label }}</span>
+      </a>
+    }
+  </nav>
+}

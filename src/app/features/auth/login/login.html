@@ -1,0 +1,46 @@
+<div class="login-page">
+  <mat-card appearance="outlined" class="login-card">
+    <div class="login-encabezado">
+      <div class="login-icono-circulo">
+        <mat-icon>lock</mat-icon>
+      </div>
+      <h2>Iniciar sesión</h2>
+      <p class="login-subtitulo">Ingresá con tu DNI y contraseña</p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="enviar()" class="login-form">
+      <mat-form-field appearance="outline">
+        <mat-label>DNI</mat-label>
+        <input matInput formControlName="dni" inputmode="numeric" autocomplete="username" />
+        @if (form.controls.dni.hasError('required') && form.controls.dni.touched) {
+          <mat-error>El DNI es obligatorio</mat-error>
+        }
+        @if (form.controls.dni.hasError('pattern') && form.controls.dni.touched) {
+          <mat-error>El DNI debe ser numérico (7 a 9 dígitos)</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Contraseña</mat-label>
+        <input matInput type="password" formControlName="password" autocomplete="current-password" />
+        @if (form.controls.password.hasError('required') && form.controls.password.touched) {
+          <mat-error>La contraseña es obligatoria</mat-error>
+        }
+      </mat-form-field>
+
+      @if (errorMensaje()) {
+        <p class="error-backend">{{ errorMensaje() }}</p>
+      }
+
+      <button mat-flat-button type="submit" [disabled]="cargando()">
+        @if (cargando()) {
+          <mat-spinner diameter="20"></mat-spinner>
+        } @else {
+          Ingresar
+        }
+      </button>
+
+      <p class="login-link">¿No tenés cuenta? <a routerLink="/registro">Registrate acá</a></p>
+    </form>
+  </mat-card>
+</div>

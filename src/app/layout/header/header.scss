@@ -1,0 +1,89 @@
+.header-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  height: 64px;
+  gap: 4px;
+  background-color: var(--mat-sys-primary);
+  color: var(--mat-sys-on-primary);
+
+  ::ng-deep .mat-icon {
+    color: var(--mat-sys-on-primary);
+  }
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: inherit;
+  text-decoration: none;
+
+  mat-icon {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.brand-nombre {
+  font-weight: 600;
+  font-size: 1.1rem;
+  letter-spacing: 0.01em;
+}
+
+.bienvenida {
+  font: var(--mat-sys-body-medium);
+  opacity: 0.85;
+  display: none;
+
+  @media (min-width: 600px) {
+    display: inline;
+  }
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.usuario-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px 6px 6px;
+  border-radius: var(--mat-sys-corner-extra-large);
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.usuario-avatar {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.16);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.usuario-info {
+  display: none;
+  flex-direction: column;
+  line-height: 1.2;
+
+  @media (min-width: 720px) {
+    display: flex;
+  }
+}
+
+.usuario-nombre {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.usuario-rol {
+  font-size: 0.75rem;
+  opacity: 0.75;
+}

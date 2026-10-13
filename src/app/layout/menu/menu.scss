@@ -1,0 +1,50 @@
+.app-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 16px 12px;
+  height: 100%;
+  box-sizing: border-box;
+
+  a {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    height: 44px;
+    padding: 0 14px;
+    border-radius: var(--mat-sys-corner-medium);
+    color: var(--mat-sys-on-surface-variant);
+    font-weight: 500;
+    font-size: 0.9375rem;
+    text-decoration: none;
+    transition: color 0.18s ease, background-color 0.18s ease;
+
+    &:hover {
+      color: var(--mat-sys-on-surface);
+      background-color: var(--mat-sys-surface-container-low);
+    }
+
+    &:hover mat-icon {
+      transform: translateX(2px);
+    }
+
+    mat-icon {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      transition: transform 0.18s ease;
+    }
+  }
+
+  .activo {
+    color: var(--mat-sys-on-primary-container);
+    background-color: var(--mat-sys-primary-container);
+    font-weight: 600;
+
+    &:hover {
+      color: var(--mat-sys-on-primary-container);
+      background-color: var(--mat-sys-primary-container);
+    }
+  }
+}
