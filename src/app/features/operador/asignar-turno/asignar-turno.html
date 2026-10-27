@@ -1,0 +1,46 @@
+<h1>Asignar turno</h1>
+
+@if (!pacienteSeleccionado()) {
+  <div class="buscador">
+    <mat-form-field appearance="outline" class="campo-busqueda">
+      <mat-label>DNI o apellido del paciente</mat-label>
+      <input matInput [formControl]="termino" (keyup.enter)="buscar()" />
+    </mat-form-field>
+    <button mat-flat-button color="primary" (click)="buscar()">
+      <mat-icon>search</mat-icon>
+      Buscar
+    </button>
+  </div>
+
+  @if (buscando()) {
+    <div class="cargando">
+      <mat-spinner diameter="32" />
+    </div>
+  } @else if (resultados().length > 0) {
+    <div class="resultados">
+      @for (paciente of resultados(); track paciente.id) {
+        <mat-card class="resultado" (click)="seleccionar(paciente)">
+          <mat-card-content>
+            <strong>{{ paciente.apellido }}, {{ paciente.nombre }}</strong>
+            <p>DNI {{ paciente.dni }} · {{ paciente.cobertura || 'Sin cobertura' }}</p>
+          </mat-card-content>
+        </mat-card>
+      }
+    </div>
+  }
+} @else {
+  <div class="paciente-elegido">
+    <p>
+      Asignando turno para <strong>{{ pacienteSeleccionado()!.apellido }}, {{ pacienteSeleccionado()!.nombre }}</strong>
+    </p>
+    <button mat-button (click)="otroPaciente()">Cambiar paciente</button>
+  </div>
+
+  @if (sedePropia) {
+    <app-turno-wizard
+      [sedeFija]="sedePropia"
+      [idPacienteFijo]="pacienteSeleccionado()!.id"
+      [coberturaPaciente]="pacienteSeleccionado()!.cobertura"
+    />
+  }
+}

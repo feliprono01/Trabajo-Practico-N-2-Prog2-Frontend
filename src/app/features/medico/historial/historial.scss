@@ -1,0 +1,47 @@
+.buscador {
+  display: flex;
+  gap: 1rem;
+  align-items: start;
+  margin: 1rem 0;
+}
+
+.campo-busqueda {
+  width: 100%;
+  max-width: 360px;
+}
+
+.cargando {
+  display: flex;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.resultados {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 420px;
+}
+
+.resultado {
+  cursor: pointer;
+}
+
+.resultado:hover {
+  background: var(--mat-sys-surface-variant, #f1f1f1);
+}
+
+.titulo-paciente {
+  margin-top: 1.5rem;
+}
+
+.historial {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.fecha {
+  font-weight: 600;
+  margin-top: 0;
+}

@@ -15,9 +15,38 @@
   @if (!usuario()) {
     <span class="bienvenida">Bienvenido a la clínica virtual</span>
   } @else {
-    <button mat-icon-button matTooltip="Notificaciones" aria-label="Notificaciones">
-      <mat-icon>notifications</mat-icon>
+    <button
+      mat-icon-button
+      matTooltip="Notificaciones"
+      aria-label="Notificaciones"
+      [matMenuTriggerFor]="menuNotificaciones"
+      (click)="abrirNotificaciones()"
+    >
+      @if (contadorNoLeidas() > 0) {
+        <mat-icon [matBadge]="contadorNoLeidas()" matBadgeColor="warn" matBadgeSize="small">notifications</mat-icon>
+      } @else {
+        <mat-icon>notifications</mat-icon>
+      }
     </button>
+
+    <mat-menu #menuNotificaciones="matMenu" class="menu-notificaciones">
+      @if (cargandoNotificaciones()) {
+        <div class="notif-cargando">
+          <mat-spinner diameter="28" />
+        </div>
+      } @else if (notificaciones().length === 0) {
+        <p class="notif-vacio">No tenés notificaciones.</p>
+      } @else {
+        @for (notificacion of notificaciones(); track notificacion.id) {
+          <button mat-menu-item [class.notif-no-leida]="!notificacion.leida" (click)="marcarLeida(notificacion); $event.stopPropagation()">
+            <div class="notif-item">
+              <span class="notif-mensaje">{{ notificacion.mensaje }}</span>
+              <span class="notif-fecha">{{ notificacion.fecha | date: 'dd/MM/yyyy HH:mm' }}</span>
+            </div>
+          </button>
+        }
+      }
+    </mat-menu>
 
     @if (usuario(); as u) {
       <div class="usuario-chip" [matTooltip]="rolLabel()">

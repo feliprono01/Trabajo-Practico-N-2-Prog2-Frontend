@@ -1,0 +1,43 @@
+<div class="encabezado">
+  <h1>Especialidades</h1>
+  <button mat-flat-button color="primary" (click)="abrirAlta()">
+    <mat-icon>add</mat-icon>
+    Nueva especialidad
+  </button>
+</div>
+
+<mat-form-field appearance="outline" class="filtro">
+  <mat-label>Buscar</mat-label>
+  <input matInput [formControl]="filtro" placeholder="Descripción" />
+  <mat-icon matSuffix>search</mat-icon>
+</mat-form-field>
+
+@if (cargando()) {
+  <div class="cargando">
+    <mat-spinner diameter="40" />
+  </div>
+} @else if (especialidadesFiltradas.length === 0) {
+  <app-empty-state mensaje="No hay especialidades para mostrar." icono="medical_services" />
+} @else {
+  <table mat-table [dataSource]="especialidadesFiltradas" class="tabla">
+    <ng-container matColumnDef="descripcion">
+      <th mat-header-cell *matHeaderCellDef>Descripción</th>
+      <td mat-cell *matCellDef="let especialidad">{{ especialidad.descripcion }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef>Acciones</th>
+      <td mat-cell *matCellDef="let especialidad">
+        <button mat-icon-button matTooltip="Editar" (click)="abrirEdicion(especialidad)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="Eliminar" (click)="eliminar(especialidad)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnas"></tr>
+  </table>
+}

@@ -1,0 +1,60 @@
+<h1>Turnos programados</h1>
+
+<div class="filtros">
+  <mat-form-field appearance="outline">
+    <mat-label>Fecha</mat-label>
+    <input matInput [matDatepicker]="picker" [formControl]="fecha" />
+    <mat-datepicker-toggle matIconSuffix [for]="picker" />
+    <mat-datepicker #picker />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Sede</mat-label>
+    <mat-select [formControl]="idSede">
+      <mat-option [value]="null">Todas</mat-option>
+      @for (sede of sedes(); track sede.id) {
+        <mat-option [value]="sede.id">{{ sede.nombre }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+</div>
+
+@if (cargando()) {
+  <div class="cargando">
+    <mat-spinner diameter="40" />
+  </div>
+} @else if (turnos().length === 0) {
+  <app-empty-state mensaje="No hay turnos programados para la fecha y sede seleccionadas." icono="event_busy" />
+} @else {
+  <mat-accordion>
+    @for (turno of turnos(); track turno.id) {
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title class="titulo-turno">
+            <span class="hora">{{ turno.hora }}</span>
+            <span>{{ turno.paciente_apellido }}, {{ turno.paciente_nombre }}</span>
+            <span class="detalle-chico">{{ edad(turno.paciente_fecha_nacimiento) }} años · {{ turno.sede }}</span>
+          </mat-panel-title>
+          <mat-panel-description>
+            <span class="estado-badge" [class]="'estado-' + turno.estado">{{ turno.estado }}</span>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <p><strong>Nota del paciente:</strong> {{ turno.nota || 'Sin nota' }}</p>
+
+        <div class="acciones-panel">
+          @if (turno.estado === 'confirmado') {
+            <button mat-flat-button color="primary" (click)="atender(turno)">
+              <mat-icon>check_circle</mat-icon>
+              Marcar como atendido
+            </button>
+            <button mat-stroked-button color="warn" (click)="cancelar(turno)">
+              <mat-icon>cancel</mat-icon>
+              Cancelar turno
+            </button>
+          }
+        </div>
+      </mat-expansion-panel>
+    }
+  </mat-accordion>
+}

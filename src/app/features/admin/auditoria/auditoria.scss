@@ -1,0 +1,26 @@
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.filtros mat-form-field {
+  min-width: 180px;
+}
+
+.cargando {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.tabla {
+  width: 100%;
+  transition: opacity 0.15s ease;
+}
+
+.tabla-cargando {
+  opacity: 0.5;
+  pointer-events: none;
+}

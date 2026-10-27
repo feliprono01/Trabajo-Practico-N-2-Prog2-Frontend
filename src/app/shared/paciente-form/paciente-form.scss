@@ -1,0 +1,27 @@
+.paciente-form {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.campo-fila {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0 16px;
+
+  @media (min-width: 560px) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+button[type='submit'] {
+  width: 100%;
+  height: 44px;
+  margin-top: 8px;
+}
+
+.error-backend {
+  color: var(--mat-sys-error, #b3261e);
+  margin: 0 0 8px;
+  font: var(--mat-sys-body-medium);
+}

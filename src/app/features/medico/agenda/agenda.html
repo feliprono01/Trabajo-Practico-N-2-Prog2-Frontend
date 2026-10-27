@@ -1,0 +1,43 @@
+<div class="encabezado">
+  <h1>Mi agenda</h1>
+  <button mat-flat-button color="primary" (click)="abrirAlta()">
+    <mat-icon>add</mat-icon>
+    Nuevo rango horario
+  </button>
+</div>
+
+<mat-form-field appearance="outline" class="selector-fecha">
+  <mat-label>Fecha</mat-label>
+  <input matInput [matDatepicker]="picker" [formControl]="fecha" />
+  <mat-datepicker-toggle matIconSuffix [for]="picker" />
+  <mat-datepicker #picker />
+</mat-form-field>
+
+@if (cargando()) {
+  <div class="cargando">
+    <mat-spinner diameter="40" />
+  </div>
+} @else if (rangos().length === 0) {
+  <app-empty-state mensaje="No hay rangos horarios cargados para esta fecha." icono="event_busy" />
+} @else {
+  <div class="rangos">
+    @for (rango of rangos(); track rango.id) {
+      <mat-card>
+        <mat-card-content class="rango-contenido">
+          <div>
+            <strong>{{ rango.hora_entrada }} - {{ rango.hora_salida }}</strong>
+            <p>{{ rango.especialidad }} · {{ rango.sede }}</p>
+          </div>
+          <div class="acciones">
+            <button mat-icon-button matTooltip="Editar" (click)="abrirEdicion(rango)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="Eliminar" (click)="eliminar(rango)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    }
+  </div>
+}

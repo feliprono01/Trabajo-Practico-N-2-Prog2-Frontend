@@ -1,0 +1,87 @@
+<h1>Auditoría</h1>
+
+<form [formGroup]="filtros" class="filtros">
+  <mat-form-field appearance="outline">
+    <mat-label>Usuario</mat-label>
+    <mat-select formControlName="id_usuario">
+      <mat-option [value]="null">Todos</mat-option>
+      @for (usuario of usuarios(); track usuario.id) {
+        <mat-option [value]="usuario.id">{{ usuario.apellido }}, {{ usuario.nombre }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Entidad</mat-label>
+    <mat-select formControlName="entidad">
+      <mat-option [value]="''">Todas</mat-option>
+      <mat-option value="usuario">Usuario</mat-option>
+      <mat-option value="sede">Sede</mat-option>
+      <mat-option value="especialidad">Especialidad</mat-option>
+      <mat-option value="cobertura">Cobertura</mat-option>
+      <mat-option value="agenda">Agenda</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Desde</mat-label>
+    <input matInput [matDatepicker]="pickerDesde" formControlName="fechaDesde" />
+    <mat-datepicker-toggle matIconSuffix [for]="pickerDesde" />
+    <mat-datepicker #pickerDesde />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Hasta</mat-label>
+    <input matInput [matDatepicker]="pickerHasta" formControlName="fechaHasta" />
+    <mat-datepicker-toggle matIconSuffix [for]="pickerHasta" />
+    <mat-datepicker #pickerHasta />
+  </mat-form-field>
+</form>
+
+@if (cargando() && registros().length === 0) {
+  <div class="cargando">
+    <mat-spinner diameter="40" />
+  </div>
+} @else if (registros().length === 0) {
+  <app-empty-state mensaje="No hay registros de auditoría para los filtros seleccionados." icono="history" />
+} @else {
+  <table mat-table [dataSource]="registros()" class="tabla" [class.tabla-cargando]="cargando()">
+    <ng-container matColumnDef="fecha">
+      <th mat-header-cell *matHeaderCellDef>Fecha</th>
+      <td mat-cell *matCellDef="let r">{{ r.fecha | date: 'dd/MM/yyyy HH:mm' }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="usuario">
+      <th mat-header-cell *matHeaderCellDef>Usuario</th>
+      <td mat-cell *matCellDef="let r">
+        {{ r.usuario_apellido ? r.usuario_apellido + ', ' + r.usuario_nombre : 'ID ' + r.id_usuario }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="accion">
+      <th mat-header-cell *matHeaderCellDef>Acción</th>
+      <td mat-cell *matCellDef="let r">{{ r.accion }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="entidad">
+      <th mat-header-cell *matHeaderCellDef>Entidad</th>
+      <td mat-cell *matCellDef="let r">{{ r.entidad }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="detalle">
+      <th mat-header-cell *matHeaderCellDef>Detalle</th>
+      <td mat-cell *matCellDef="let r">{{ r.detalle }}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnas"></tr>
+  </table>
+
+  <mat-paginator
+    [length]="total()"
+    [pageIndex]="page - 1"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[15, 30, 50]"
+    (page)="cambiarPagina($event)"
+  />
+}

@@ -87,3 +87,42 @@
   font-size: 0.75rem;
   opacity: 0.75;
 }
+
+.menu-notificaciones {
+  max-width: 360px;
+}
+
+.notif-cargando {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.notif-vacio {
+  padding: 1rem;
+  margin: 0;
+  color: var(--mat-sys-on-surface-variant, #777);
+  text-align: center;
+}
+
+.notif-item {
+  display: flex;
+  flex-direction: column;
+  white-space: normal;
+  line-height: 1.3;
+  padding: 0.25rem 0;
+}
+
+.notif-mensaje {
+  font-size: 0.9rem;
+}
+
+.notif-fecha {
+  font-size: 0.75rem;
+  color: var(--mat-sys-on-surface-variant, #777);
+}
+
+.notif-no-leida {
+  background: color-mix(in srgb, var(--mat-sys-primary, #3f51b5) 8%, transparent);
+  font-weight: 600;
+}

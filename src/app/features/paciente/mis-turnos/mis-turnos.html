@@ -1,0 +1,53 @@
+<h1>Mis turnos</h1>
+
+@if (cargando()) {
+  <div class="cargando">
+    <mat-spinner diameter="40" />
+  </div>
+} @else if (turnos().length === 0) {
+  <app-empty-state mensaje="Todavía no tenés turnos." icono="event_busy" />
+} @else {
+  <mat-accordion>
+    @for (turno of turnos(); track turno.id) {
+      <mat-expansion-panel (opened)="cargarHistorial(turno)">
+        <mat-expansion-panel-header>
+          <mat-panel-title class="titulo-turno">
+            <span>{{ turno.fecha | date: 'dd/MM/yyyy' }} - {{ turno.hora }}</span>
+            <span>{{ turno.medico_apellido }}, {{ turno.medico_nombre }}</span>
+          </mat-panel-title>
+          <mat-panel-description>
+            <span class="estado-badge" [class]="'estado-' + turno.estado">{{ turno.estado }}</span>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <p><strong>Especialidad:</strong> {{ turno.especialidad }}</p>
+        <p><strong>Sede:</strong> {{ turno.sede }}</p>
+        <p><strong>Nota:</strong> {{ turno.nota }}</p>
+
+        @if (turno.estado === 'confirmado') {
+          <button mat-stroked-button color="warn" (click)="cancelar(turno)">
+            <mat-icon>cancel</mat-icon>
+            Cancelar turno
+          </button>
+        }
+
+        @if (turno.estado === 'atendido') {
+          @if (historialPorTurno()[turno.id] === undefined) {
+            <div class="cargando-historial"><mat-spinner diameter="24" /></div>
+          } @else if (historialPorTurno()[turno.id]; as registro) {
+            <div class="historial">
+              <h3>Historial clínico</h3>
+              <p><strong>Diagnóstico:</strong> {{ registro.diagnostico }}</p>
+              @if (registro.tratamiento) {
+                <p><strong>Tratamiento:</strong> {{ registro.tratamiento }}</p>
+              }
+              @if (registro.observaciones) {
+                <p><strong>Observaciones:</strong> {{ registro.observaciones }}</p>
+              }
+            </div>
+          }
+        }
+      </mat-expansion-panel>
+    }
+  </mat-accordion>
+}

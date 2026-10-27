@@ -1,0 +1,49 @@
+.cargando {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.titulo-turno {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.estado-badge {
+  text-transform: capitalize;
+  padding: 0.15rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+}
+
+.estado-confirmado {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+.estado-cancelado {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.estado-atendido {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.cargando-historial {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.historial {
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--mat-sys-outline-variant, #ddd);
+}
+
+.historial h3 {
+  margin: 0 0 0.5rem;
+}

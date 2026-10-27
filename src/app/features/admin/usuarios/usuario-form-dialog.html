@@ -1,0 +1,96 @@
+<h2 mat-dialog-title>{{ esEdicion() ? 'Editar usuario' : 'Nuevo usuario' }}</h2>
+<form [formGroup]="form" (ngSubmit)="guardar()">
+  <mat-dialog-content class="contenido">
+    <mat-form-field appearance="outline">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="nombre" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Apellido</mat-label>
+      <input matInput formControlName="apellido" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>DNI</mat-label>
+      <input matInput formControlName="dni" />
+      @if (form.controls.dni.hasError('pattern')) {
+        <mat-error>El DNI debe tener entre 7 y 9 dígitos</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="email" />
+      @if (form.controls.email.hasError('email')) {
+        <mat-error>Ingresá un email válido</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ esEdicion() ? 'Nueva contraseña (opcional)' : 'Contraseña' }}</mat-label>
+      <input matInput type="password" formControlName="password" />
+      @if (form.controls.password.hasError('minlength')) {
+        <mat-error>Mínimo 6 caracteres</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Fecha de nacimiento</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="fecha_nacimiento" />
+      <mat-datepicker-toggle matIconSuffix [for]="picker" />
+      <mat-datepicker #picker />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Teléfono</mat-label>
+      <input matInput formControlName="telefono" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Rol</mat-label>
+      <mat-select formControlName="rol">
+        @for (rol of roles; track rol.valor) {
+          <mat-option [value]="rol.valor">{{ rol.etiqueta }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    @if (mostrarSede) {
+      <mat-form-field appearance="outline">
+        <mat-label>Sede</mat-label>
+        <mat-select formControlName="id_sede">
+          @for (sede of data.sedes; track sede.id) {
+            <mat-option [value]="sede.id">{{ sede.nombre }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    }
+
+    @if (mostrarCobertura) {
+      <mat-form-field appearance="outline">
+        <mat-label>Cobertura</mat-label>
+        <mat-select formControlName="id_cobertura">
+          @for (cobertura of data.coberturas; track cobertura.id) {
+            <mat-option [value]="cobertura.id">{{ cobertura.nombre }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    }
+
+    @if (mostrarEspecialidades) {
+      <mat-form-field appearance="outline">
+        <mat-label>Especialidades</mat-label>
+        <mat-select formControlName="especialidades" multiple>
+          @for (especialidad of data.especialidades; track especialidad.id) {
+            <mat-option [value]="especialidad.id">{{ especialidad.descripcion }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    }
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" [mat-dialog-close]="null">Cancelar</button>
+    <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid">Guardar</button>
+  </mat-dialog-actions>
+</form>

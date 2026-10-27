@@ -1,0 +1,21 @@
+.contenido {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 360px;
+}
+
+.fila {
+  display: flex;
+  gap: 1rem;
+}
+
+.fila mat-form-field {
+  flex: 1;
+}
+
+.error-form {
+  color: var(--mat-sys-error, #b3261e);
+  font-size: 0.85rem;
+  margin: -0.5rem 0 0.5rem;
+}
