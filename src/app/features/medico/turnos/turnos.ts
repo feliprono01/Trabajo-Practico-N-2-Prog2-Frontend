@@ -9,7 +9,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { TurnoService } from '../../../core/services/turno';
 import { SedeService } from '../../../core/services/sede';
@@ -49,7 +48,6 @@ export class MedicoTurnos implements OnInit {
   private readonly notificacionService = inject(NotificacionService);
   private readonly historialService = inject(HistorialClinicoService);
   private readonly dialog = inject(MatDialog);
-  private readonly snackBar = inject(MatSnackBar);
   private readonly alertService = inject(AlertService);
 
   readonly fecha = new FormControl(new Date(), { nonNullable: true });
@@ -99,7 +97,7 @@ export class MedicoTurnos implements OnInit {
         next: () => {
           this.historialService.crear(payload).subscribe({
             next: () => {
-              this.snackBar.open('Turno marcado como atendido.', 'Cerrar', { duration: 3000 });
+              this.alertService.exito('Turno marcado como atendido.');
               this.notificacionService.refrescarContador();
               this.cargar();
             },
@@ -119,7 +117,7 @@ export class MedicoTurnos implements OnInit {
       if (!confirmado) return;
       this.turnoService.cancelar(turno.id).subscribe({
         next: () => {
-          this.snackBar.open('Turno cancelado correctamente.', 'Cerrar', { duration: 3000 });
+          this.alertService.exito('Turno cancelado correctamente.');
           this.notificacionService.refrescarContador();
           this.cargar();
         },

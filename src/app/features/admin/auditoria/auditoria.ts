@@ -15,6 +15,7 @@ import { UsuarioService } from '../../../core/services/usuario';
 import { RegistroAuditoria } from '../../../core/models/auditoria.model';
 import { Usuario } from '../../../core/models/usuario.model';
 import { AlertService } from '../../../core/services/alert';
+import { rangoFechasValidator } from '../../../core/utils/fecha.util';
 import { EmptyState } from '../../../shared/empty-state/empty-state';
 
 @Component({
@@ -49,12 +50,15 @@ export class Auditoria implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly usuarioService = inject(UsuarioService);
 
-  readonly filtros = this.fb.group({
-    id_usuario: [null as number | null],
-    entidad: [''],
-    fechaDesde: [null as Date | null],
-    fechaHasta: [null as Date | null],
-  });
+  readonly filtros = this.fb.group(
+    {
+      id_usuario: [null as number | null],
+      entidad: [''],
+      fechaDesde: [null as Date | null],
+      fechaHasta: [null as Date | null],
+    },
+    { validators: rangoFechasValidator }
+  );
 
   constructor(
     private readonly auditoriaService: AuditoriaService,
@@ -72,6 +76,9 @@ export class Auditoria implements OnInit {
   }
 
   cargar(): void {
+    if (this.filtros.invalid) {
+      return;
+    }
     this.cargando.set(true);
     const valor = this.filtros.value;
     this.auditoriaService

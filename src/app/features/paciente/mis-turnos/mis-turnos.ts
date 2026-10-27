@@ -4,7 +4,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { TurnoService } from '../../../core/services/turno';
 import { HistorialClinicoService } from '../../../core/services/historial-clinico';
@@ -29,7 +28,6 @@ export class MisTurnos implements OnInit {
   private readonly notificacionService = inject(NotificacionService);
   private readonly authService = inject(AuthService);
   private readonly dialog = inject(MatDialog);
-  private readonly snackBar = inject(MatSnackBar);
   private readonly alertService = inject(AlertService);
 
   readonly turnos = signal<Turno[]>([]);
@@ -83,7 +81,7 @@ export class MisTurnos implements OnInit {
       if (!confirmado) return;
       this.turnoService.cancelar(turno.id).subscribe({
         next: () => {
-          this.snackBar.open('Turno cancelado correctamente.', 'Cerrar', { duration: 3000 });
+          this.alertService.exito('Turno cancelado correctamente.');
           this.notificacionService.refrescarContador();
           this.cargar();
         },

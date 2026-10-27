@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output, inject, signal } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, inject, signal } from '@angular/core';
+import { FormBuilder, FormGroupDirective, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -32,6 +32,7 @@ export class PacienteForm implements OnInit {
   @Input() errorMensaje: string | null = null;
   @Input() textoBoton = 'Registrarme';
   @Output() enviarFormulario = new EventEmitter<RegistroRequest>();
+  @ViewChild(FormGroupDirective) private readonly formGroupDirective?: FormGroupDirective;
 
   private readonly fb = inject(FormBuilder);
   private readonly coberturaService = inject(CoberturaService);
@@ -43,7 +44,7 @@ export class PacienteForm implements OnInit {
     apellido: ['', [Validators.required]],
     dni: ['', [Validators.required, Validators.pattern(/^\d{7,9}$/)]],
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(6)]],
+    password: ['', [Validators.required, Validators.minLength(8)]],
     fecha_nacimiento: [null as Date | null, [Validators.required]],
     id_cobertura: [null as number | null, [Validators.required]],
     telefono: [''],
@@ -75,7 +76,9 @@ export class PacienteForm implements OnInit {
   }
 
   resetear(): void {
-    this.form.reset();
+    // form.reset() solo no alcanza: limpia los valores pero no el estado "submitted"
+    // del FormGroupDirective, y Material sigue mostrando los campos requeridos en rojo.
+    this.formGroupDirective?.resetForm();
   }
 
   private formatearFecha(fecha: Date): string {

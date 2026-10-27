@@ -65,7 +65,7 @@ export class UsuarioFormDialog implements OnInit {
       apellido: [u?.apellido ?? '', Validators.required],
       dni: [{ value: u?.dni ?? '', disabled: this.esEdicion() }, [Validators.required, Validators.pattern(/^\d{7,9}$/)]],
       email: [u?.email ?? '', [Validators.required, Validators.email]],
-      password: [u ? '' : '', u ? [] : [Validators.required, Validators.minLength(6)]],
+      password: [u ? '' : '', u ? [Validators.minLength(8)] : [Validators.required, Validators.minLength(8)]],
       fecha_nacimiento: [u?.fecha_nacimiento ? parsearFechaLocal(u.fecha_nacimiento) : null, Validators.required],
       telefono: [u?.telefono ?? ''],
       rol: [{ value: (u?.rol as Rol) ?? 'operador', disabled: this.esEdicion() }, Validators.required],

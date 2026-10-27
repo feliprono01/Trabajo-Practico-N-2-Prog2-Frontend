@@ -7,12 +7,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { SedeService } from '../../../core/services/sede';
 import { Sede, SedeRequest } from '../../../core/models/sede.model';
 import { SedeFormDialog } from './sede-form-dialog';
 import { AlertService } from '../../../core/services/alert';
+import { coincideTexto } from '../../../core/utils/texto.util';
 import { ConfirmDialog } from '../../../shared/confirm-dialog/confirm-dialog';
 import { EmptyState } from '../../../shared/empty-state/empty-state';
 
@@ -40,20 +40,16 @@ export class Sedes implements OnInit {
   readonly cargando = signal(false);
 
   get sedesFiltradas(): Sede[] {
-    const termino = this.filtro.value.trim().toLowerCase();
+    const termino = this.filtro.value.trim();
     if (!termino) return this.sedes();
     return this.sedes().filter(
-      (s) =>
-        s.nombre.toLowerCase().includes(termino) ||
-        s.direccion.toLowerCase().includes(termino) ||
-        s.telefono.toLowerCase().includes(termino)
+      (s) => coincideTexto(s.nombre, termino) || coincideTexto(s.direccion, termino) || coincideTexto(s.telefono, termino)
     );
   }
 
   constructor(
     private readonly sedeService: SedeService,
     private readonly dialog: MatDialog,
-    private readonly snackBar: MatSnackBar,
     private readonly alertService: AlertService
   ) {}
 
@@ -81,7 +77,7 @@ export class Sedes implements OnInit {
       if (!resultado) return;
       this.sedeService.crear(resultado).subscribe({
         next: () => {
-          this.snackBar.open('Sede creada correctamente.', 'Cerrar', { duration: 3000 });
+          this.alertService.exito('Sede creada correctamente.');
           this.cargar();
         },
         error: (err) => this.mostrarError(err, 'No se pudo crear la sede.'),
@@ -95,7 +91,7 @@ export class Sedes implements OnInit {
       if (!resultado) return;
       this.sedeService.actualizar(sede.id, resultado).subscribe({
         next: () => {
-          this.snackBar.open('Sede actualizada correctamente.', 'Cerrar', { duration: 3000 });
+          this.alertService.exito('Sede actualizada correctamente.');
           this.cargar();
         },
         error: (err) => this.mostrarError(err, 'No se pudo actualizar la sede.'),
@@ -111,7 +107,7 @@ export class Sedes implements OnInit {
       if (!confirmado) return;
       this.sedeService.eliminar(sede.id).subscribe({
         next: () => {
-          this.snackBar.open('Sede eliminada correctamente.', 'Cerrar', { duration: 3000 });
+          this.alertService.exito('Sede eliminada correctamente.');
           this.cargar();
         },
         error: (err) => this.mostrarError(err, 'No se pudo eliminar la sede.'),

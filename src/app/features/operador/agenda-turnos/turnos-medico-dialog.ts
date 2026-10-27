@@ -6,7 +6,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { TurnoService } from '../../../core/services/turno';
 import { NotificacionService } from '../../../core/services/notificacion';
 import { Turno } from '../../../core/models/turno.model';
@@ -41,7 +40,6 @@ export class TurnosMedicoDialog implements OnInit {
   private readonly turnoService = inject(TurnoService);
   private readonly notificacionService = inject(NotificacionService);
   private readonly dialog = inject(MatDialog);
-  private readonly snackBar = inject(MatSnackBar);
   private readonly alertService = inject(AlertService);
 
   readonly turnos = signal<Turno[]>([]);
@@ -75,7 +73,7 @@ export class TurnosMedicoDialog implements OnInit {
       if (!confirmado) return;
       this.turnoService.cancelar(turno.id).subscribe({
         next: () => {
-          this.snackBar.open('Turno cancelado correctamente.', 'Cerrar', { duration: 3000 });
+          this.alertService.exito('Turno cancelado correctamente.');
           this.notificacionService.refrescarContador();
           this.cargar();
         },

@@ -4,6 +4,11 @@
   margin: 1rem 0;
 }
 
+.error-rango {
+  color: var(--mat-sys-error, #b3261e);
+  margin: -0.5rem 0 1rem;
+}
+
 .cargando {
   display: flex;
   justify-content: center;

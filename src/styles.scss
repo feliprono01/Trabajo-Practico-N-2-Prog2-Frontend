@@ -90,3 +90,16 @@ body {
   height: 100%;
 }
 /* You can add global styles to this file, and also import other style files */
+
+// Snackbar de éxito: fondo verde bien visible, en lugar del estilo oscuro por
+// defecto que se confunde con el footer oscuro de la app. Se fuerza el color
+// directamente en la superficie: las custom properties de MDC no alcanzan en
+// esta versión (el componente no las usa para el fondo).
+.snackbar-exito .mdc-snackbar__surface {
+  background-color: #2e7d32 !important;
+}
+
+.snackbar-exito .mdc-snackbar__label,
+.snackbar-exito .mat-mdc-snack-bar-action {
+  color: #ffffff !important;
+}

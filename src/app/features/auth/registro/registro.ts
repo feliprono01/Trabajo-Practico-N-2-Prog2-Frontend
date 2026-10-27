@@ -2,8 +2,8 @@ import { Component, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from '../../../core/services/auth';
+import { AlertService } from '../../../core/services/alert';
 import { RegistroRequest } from '../../../core/models/auth.model';
 import { PacienteForm } from '../../../shared/paciente-form/paciente-form';
 
@@ -16,7 +16,7 @@ import { PacienteForm } from '../../../shared/paciente-form/paciente-form';
 export class Registro {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
-  private readonly snackBar = inject(MatSnackBar);
+  private readonly alertService = inject(AlertService);
 
   readonly cargando = signal(false);
   readonly errorMensaje = signal<string | null>(null);
@@ -28,7 +28,7 @@ export class Registro {
     this.authService.registro(datos).subscribe({
       next: () => {
         this.cargando.set(false);
-        this.snackBar.open('Registro exitoso. Ya podés iniciar sesión.', 'Cerrar', { duration: 4000 });
+        this.alertService.exito('Registro exitoso. Ya podés iniciar sesión.');
         this.router.navigate(['/login']);
       },
       error: (error) => {

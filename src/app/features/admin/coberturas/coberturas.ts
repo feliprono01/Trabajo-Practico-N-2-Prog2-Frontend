@@ -7,12 +7,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { CoberturaService } from '../../../core/services/cobertura';
 import { Cobertura, CoberturaRequest } from '../../../core/models/cobertura.model';
 import { CoberturaFormDialog } from './cobertura-form-dialog';
 import { AlertService } from '../../../core/services/alert';
+import { coincideTexto } from '../../../core/utils/texto.util';
 import { ConfirmDialog } from '../../../shared/confirm-dialog/confirm-dialog';
 import { EmptyState } from '../../../shared/empty-state/empty-state';
 
@@ -40,15 +40,14 @@ export class Coberturas implements OnInit {
   readonly cargando = signal(false);
 
   get coberturasFiltradas(): Cobertura[] {
-    const termino = this.filtro.value.trim().toLowerCase();
+    const termino = this.filtro.value.trim();
     if (!termino) return this.coberturas();
-    return this.coberturas().filter((c) => c.nombre.toLowerCase().includes(termino));
+    return this.coberturas().filter((c) => coincideTexto(c.nombre, termino));
   }
 
   constructor(
     private readonly coberturaService: CoberturaService,
     private readonly dialog: MatDialog,
-    private readonly snackBar: MatSnackBar,
     private readonly alertService: AlertService
   ) {}
 
@@ -76,7 +75,7 @@ export class Coberturas implements OnInit {
       if (!resultado) return;
       this.coberturaService.crear(resultado).subscribe({
         next: () => {
-          this.snackBar.open('Cobertura creada correctamente.', 'Cerrar', { duration: 3000 });
+          this.alertService.exito('Cobertura creada correctamente.');
           this.cargar();
         },
         error: (err) => this.mostrarError(err, 'No se pudo crear la cobertura.'),
@@ -90,7 +89,7 @@ export class Coberturas implements OnInit {
       if (!resultado) return;
       this.coberturaService.actualizar(cobertura.id, resultado).subscribe({
         next: () => {
-          this.snackBar.open('Cobertura actualizada correctamente.', 'Cerrar', { duration: 3000 });
+          this.alertService.exito('Cobertura actualizada correctamente.');
           this.cargar();
         },
         error: (err) => this.mostrarError(err, 'No se pudo actualizar la cobertura.'),
@@ -106,7 +105,7 @@ export class Coberturas implements OnInit {
       if (!confirmado) return;
       this.coberturaService.eliminar(cobertura.id).subscribe({
         next: () => {
-          this.snackBar.open('Cobertura eliminada correctamente.', 'Cerrar', { duration: 3000 });
+          this.alertService.exito('Cobertura eliminada correctamente.');
           this.cargar();
         },
         error: (err) => this.mostrarError(err, 'No se pudo eliminar la cobertura.'),

@@ -7,7 +7,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from '../../../core/services/auth';
 import { CoberturaService } from '../../../core/services/cobertura';
 import { UsuarioPerfil } from '../../../core/models/usuario.model';
@@ -43,7 +42,6 @@ export class MisDatos implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly authService = inject(AuthService);
   private readonly coberturaService = inject(CoberturaService);
-  private readonly snackBar = inject(MatSnackBar);
   private readonly alertService = inject(AlertService);
 
   readonly perfil = signal<UsuarioPerfil | null>(null);
@@ -56,7 +54,7 @@ export class MisDatos implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       telefono: [''],
       id_cobertura: [null as number | null, Validators.required],
-      password: [''],
+      password: ['', [Validators.minLength(8)]],
       repetirPassword: [''],
     },
     { validators: passwordsCoinciden }
@@ -107,7 +105,7 @@ export class MisDatos implements OnInit {
           this.guardando.set(false);
           this.perfil.set(r.datos);
           this.form.patchValue({ password: '', repetirPassword: '' });
-          this.snackBar.open('Datos actualizados correctamente.', 'Cerrar', { duration: 3000 });
+          this.alertService.exito('Datos actualizados correctamente.');
         },
         error: (err) => {
           this.guardando.set(false);

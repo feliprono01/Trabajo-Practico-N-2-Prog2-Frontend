@@ -9,7 +9,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { debounceTime } from 'rxjs';
 import { UsuarioService } from '../../../core/services/usuario';
@@ -79,7 +78,6 @@ export class Usuarios implements OnInit {
     private readonly especialidadService: EspecialidadService,
     private readonly coberturaService: CoberturaService,
     private readonly dialog: MatDialog,
-    private readonly snackBar: MatSnackBar,
     private readonly alertService: AlertService
   ) {}
 
@@ -135,7 +133,7 @@ export class Usuarios implements OnInit {
       if (!resultado) return;
       this.usuarioService.crear(resultado).subscribe({
         next: () => {
-          this.snackBar.open('Usuario creado correctamente.', 'Cerrar', { duration: 3000 });
+          this.alertService.exito('Usuario creado correctamente.');
           this.cargar();
         },
         error: (err) => this.mostrarError(err, 'No se pudo crear el usuario.'),
@@ -151,7 +149,7 @@ export class Usuarios implements OnInit {
       if (!resultado) return;
       this.usuarioService.actualizar(usuario.id, resultado).subscribe({
         next: () => {
-          this.snackBar.open('Usuario actualizado correctamente.', 'Cerrar', { duration: 3000 });
+          this.alertService.exito('Usuario actualizado correctamente.');
           this.cargar();
         },
         error: (err) => this.mostrarError(err, 'No se pudo actualizar el usuario.'),

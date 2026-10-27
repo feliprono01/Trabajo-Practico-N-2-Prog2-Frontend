@@ -6,7 +6,7 @@
       {{ especialidadSeleccionada()?.descripcion }} con {{ medicoSeleccionado()?.apellido }},
       {{ medicoSeleccionado()?.nombre }} el {{ fechaSeleccionada() }} a las {{ horarioSeleccionado() }} hs.
     </p>
-    <button mat-flat-button color="primary" (click)="reiniciar()">Solicitar otro turno</button>
+    <button mat-flat-button color="primary" (click)="solicitarOtroClick()">Solicitar otro turno</button>
   </div>
 } @else {
   <mat-stepper [selectedIndex]="pasoActual()" (selectedIndexChange)="pasoActual.set($event)" orientation="horizontal">

@@ -1,7 +1,7 @@
 import { Component, ViewChild, inject, signal } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from '../../../core/services/auth';
+import { AlertService } from '../../../core/services/alert';
 import { RegistroRequest } from '../../../core/models/auth.model';
 import { PacienteForm } from '../../../shared/paciente-form/paciente-form';
 
@@ -14,7 +14,7 @@ import { PacienteForm } from '../../../shared/paciente-form/paciente-form';
 })
 export class OperadorPacientes {
   private readonly authService = inject(AuthService);
-  private readonly snackBar = inject(MatSnackBar);
+  private readonly alertService = inject(AlertService);
 
   @ViewChild(PacienteForm) pacienteForm!: PacienteForm;
 
@@ -28,8 +28,8 @@ export class OperadorPacientes {
     this.authService.registro(datos).subscribe({
       next: () => {
         this.cargando.set(false);
-        this.snackBar.open('Paciente registrado correctamente.', 'Cerrar', { duration: 4000 });
         this.pacienteForm.resetear();
+        this.alertService.exito('Paciente registrado correctamente.');
       },
       error: (error) => {
         this.cargando.set(false);

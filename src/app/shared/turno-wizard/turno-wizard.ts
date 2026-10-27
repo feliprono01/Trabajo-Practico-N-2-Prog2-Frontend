@@ -42,6 +42,8 @@ export class TurnoWizard implements OnInit {
   @Input() nombrePaciente: string | null = null;
   @Input() coberturaPaciente: string | null = null;
   @Output() turnoCreado = new EventEmitter<void>();
+  /** Emitido al tocar "Solicitar otro turno": para que el contenedor (ej. operador) pueda volver a elegir paciente. */
+  @Output() solicitarOtro = new EventEmitter<void>();
 
   private readonly especialidadService = inject(EspecialidadService);
   private readonly sedeService = inject(SedeService);
@@ -230,5 +232,10 @@ export class TurnoWizard implements OnInit {
     this.completado.set(false);
     this.errorEnvio.set(null);
     this.pasoActual.set(0);
+  }
+
+  solicitarOtroClick(): void {
+    this.reiniciar();
+    this.solicitarOtro.emit();
   }
 }

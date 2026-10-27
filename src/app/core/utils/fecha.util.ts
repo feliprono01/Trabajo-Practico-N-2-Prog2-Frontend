@@ -16,3 +16,16 @@ export function formatearFechaLocal(fecha: Date): string {
   const dia = String(fecha.getDate()).padStart(2, '0');
   return `${anio}-${mes}-${dia}`;
 }
+
+/**
+ * Validador de FormGroup: exige que, si ambos campos "fechaDesde" y "fechaHasta"
+ * tienen valor, "fechaHasta" no sea anterior a "fechaDesde".
+ */
+export function rangoFechasValidator(group: { get(nombre: string): { value: unknown } | null }): Record<string, boolean> | null {
+  const desde = group.get('fechaDesde')?.value as Date | null;
+  const hasta = group.get('fechaHasta')?.value as Date | null;
+  if (desde && hasta && hasta < desde) {
+    return { rangoFechasInvalido: true };
+  }
+  return null;
+}

@@ -38,6 +38,10 @@
   </mat-form-field>
 </form>
 
+@if (filtros.hasError('rangoFechasInvalido')) {
+  <p class="error-rango">La fecha "Hasta" no puede ser anterior a la fecha "Desde".</p>
+}
+
 @if (cargando() && registros().length === 0) {
   <div class="cargando">
     <mat-spinner diameter="40" />

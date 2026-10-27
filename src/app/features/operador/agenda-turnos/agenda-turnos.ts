@@ -10,7 +10,6 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { AgendaService } from '../../../core/services/agenda';
 import { SedeService } from '../../../core/services/sede';
@@ -50,7 +49,6 @@ export class OperadorAgendaTurnos implements OnInit {
   private readonly sedeService = inject(SedeService);
   private readonly authService = inject(AuthService);
   private readonly dialog = inject(MatDialog);
-  private readonly snackBar = inject(MatSnackBar);
   private readonly alertService = inject(AlertService);
 
   readonly columnas = ['medico', 'especialidad', 'horario', 'sede', 'acciones'];
@@ -99,7 +97,7 @@ export class OperadorAgendaTurnos implements OnInit {
       if (!resultado) return;
       this.agendaService.crear(resultado).subscribe({
         next: () => {
-          this.snackBar.open('Agenda creada correctamente.', 'Cerrar', { duration: 3000 });
+          this.alertService.exito('Agenda creada correctamente.');
           this.cargar();
         },
         error: (err) => this.mostrarError(err, 'No se pudo crear la agenda.'),
@@ -115,7 +113,7 @@ export class OperadorAgendaTurnos implements OnInit {
       if (!resultado) return;
       this.agendaService.actualizar(rango.id, resultado).subscribe({
         next: () => {
-          this.snackBar.open('Agenda actualizada correctamente.', 'Cerrar', { duration: 3000 });
+          this.alertService.exito('Agenda actualizada correctamente.');
           this.cargar();
         },
         error: (err) => this.mostrarError(err, 'No se pudo actualizar la agenda.'),
@@ -131,7 +129,7 @@ export class OperadorAgendaTurnos implements OnInit {
       if (!confirmado) return;
       this.agendaService.eliminar(rango.id).subscribe({
         next: () => {
-          this.snackBar.open('Rango horario eliminado correctamente.', 'Cerrar', { duration: 3000 });
+          this.alertService.exito('Rango horario eliminado correctamente.');
           this.cargar();
         },
         error: (err) => this.mostrarError(err, 'No se pudo eliminar el rango horario.'),

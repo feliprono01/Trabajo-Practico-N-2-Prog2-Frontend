@@ -11,6 +11,7 @@ import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration } from 'chart.js';
 import { debounceTime, forkJoin } from 'rxjs';
 import { ReporteService } from '../../../core/services/reporte';
+import { rangoFechasValidator } from '../../../core/utils/fecha.util';
 import { RankingMedico, TasaCancelacion } from '../../../core/models/reporte.model';
 import { EmptyState } from '../../../shared/empty-state/empty-state';
 
@@ -40,10 +41,13 @@ export class Reportes implements OnInit {
 
   private readonly fb = inject(FormBuilder);
 
-  readonly filtros = this.fb.group({
-    fechaDesde: [null as Date | null],
-    fechaHasta: [null as Date | null],
-  });
+  readonly filtros = this.fb.group(
+    {
+      fechaDesde: [null as Date | null],
+      fechaHasta: [null as Date | null],
+    },
+    { validators: rangoFechasValidator }
+  );
 
   readonly dataEspecialidad = signal<ChartConfiguration<'bar'>['data']>({
     labels: [],
@@ -69,6 +73,9 @@ export class Reportes implements OnInit {
   }
 
   cargar(): void {
+    if (this.filtros.invalid) {
+      return;
+    }
     this.cargando.set(true);
     const valor = this.filtros.value;
     const filtro = {
