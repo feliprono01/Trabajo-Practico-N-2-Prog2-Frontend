@@ -10,6 +10,7 @@ import { Sede } from '../../core/models/sede.model';
 import { EspecialidadResumen } from '../../core/models/usuario.model';
 import { RangoAgenda, RangoAgendaRequest } from '../../core/models/agenda.model';
 import { formatearFechaLocal, parsearFechaLocal } from '../../core/utils/fecha.util';
+import { HoraInput } from '../hora-input/hora-input';
 
 export interface RangoAgendaFormDialogData {
   rango: RangoAgenda | null;
@@ -41,6 +42,7 @@ const horaSalidaPosterior: ValidatorFn = (group): ValidationErrors | null => {
     MatInputModule,
     MatSelectModule,
     MatDatepickerModule,
+    HoraInput,
   ],
   templateUrl: './rango-agenda-form-dialog.html',
   styleUrl: './rango-agenda-form-dialog.scss',

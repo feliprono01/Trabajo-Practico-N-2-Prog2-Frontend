@@ -1,0 +1,72 @@
+@if (label) {
+  <label class="hora-input-label">{{ label }}</label>
+}
+<div class="hora-input" [class.deshabilitado]="deshabilitado()">
+  <div class="segmento">
+    <button
+      type="button"
+      mat-icon-button
+      class="flecha"
+      [disabled]="deshabilitado()"
+      (click)="incrementarHora()"
+      aria-label="Aumentar hora"
+    >
+      <mat-icon>keyboard_arrow_up</mat-icon>
+    </button>
+    <input
+      type="text"
+      inputmode="numeric"
+      maxlength="2"
+      class="valor"
+      [value]="horaTexto"
+      [disabled]="deshabilitado()"
+      (blur)="editarHora($any($event.target).value)"
+      aria-label="Hora"
+    />
+    <button
+      type="button"
+      mat-icon-button
+      class="flecha"
+      [disabled]="deshabilitado()"
+      (click)="decrementarHora()"
+      aria-label="Disminuir hora"
+    >
+      <mat-icon>keyboard_arrow_down</mat-icon>
+    </button>
+  </div>
+
+  <span class="separador">:</span>
+
+  <div class="segmento">
+    <button
+      type="button"
+      mat-icon-button
+      class="flecha"
+      [disabled]="deshabilitado()"
+      (click)="incrementarMinuto()"
+      aria-label="Aumentar minutos"
+    >
+      <mat-icon>keyboard_arrow_up</mat-icon>
+    </button>
+    <input
+      type="text"
+      inputmode="numeric"
+      maxlength="2"
+      class="valor"
+      [value]="minutoTexto"
+      [disabled]="deshabilitado()"
+      (blur)="editarMinuto($any($event.target).value)"
+      aria-label="Minutos"
+    />
+    <button
+      type="button"
+      mat-icon-button
+      class="flecha"
+      [disabled]="deshabilitado()"
+      (click)="decrementarMinuto()"
+      aria-label="Disminuir minutos"
+    >
+      <mat-icon>keyboard_arrow_down</mat-icon>
+    </button>
+  </div>
+</div>

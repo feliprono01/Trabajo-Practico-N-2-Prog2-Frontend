@@ -27,15 +27,8 @@
     </mat-form-field>
 
     <div class="fila">
-      <mat-form-field appearance="outline">
-        <mat-label>Hora de entrada</mat-label>
-        <input matInput type="time" formControlName="hora_entrada" />
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Hora de salida</mat-label>
-        <input matInput type="time" formControlName="hora_salida" />
-      </mat-form-field>
+      <app-hora-input label="Hora de entrada" formControlName="hora_entrada" />
+      <app-hora-input label="Hora de salida" formControlName="hora_salida" />
     </div>
 
     @if (form.hasError('salidaInvalida') && (form.touched || form.dirty)) {

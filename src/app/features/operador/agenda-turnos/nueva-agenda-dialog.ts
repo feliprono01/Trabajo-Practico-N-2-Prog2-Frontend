@@ -10,6 +10,7 @@ import { MedicoService } from '../../../core/services/medico';
 import { Medico } from '../../../core/models/medico.model';
 import { RangoAgendaRequest } from '../../../core/models/agenda.model';
 import { formatearFechaLocal } from '../../../core/utils/fecha.util';
+import { HoraInput } from '../../../shared/hora-input/hora-input';
 
 const horaSalidaPosterior: ValidatorFn = (group): ValidationErrors | null => {
   const entrada = group.get('hora_entrada')?.value;
@@ -31,6 +32,7 @@ const horaSalidaPosterior: ValidatorFn = (group): ValidationErrors | null => {
     MatInputModule,
     MatSelectModule,
     MatDatepickerModule,
+    HoraInput,
   ],
   templateUrl: './nueva-agenda-dialog.html',
   styleUrl: './nueva-agenda-dialog.scss',
