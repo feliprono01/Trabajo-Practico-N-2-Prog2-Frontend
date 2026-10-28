@@ -11,6 +11,7 @@ import { Especialidad } from '../../../core/models/especialidad.model';
 import { Cobertura } from '../../../core/models/cobertura.model';
 import { Rol, Usuario, UsuarioAltaRequest, UsuarioEdicionRequest } from '../../../core/models/usuario.model';
 import { formatearFechaLocal, parsearFechaLocal } from '../../../core/utils/fecha.util';
+import { contrasenaMinimaValidator, edadMinimaValidator, noSoloEspaciosValidator } from '../../../core/utils/validadores.util';
 
 export interface UsuarioFormDialogData {
   usuario: Usuario | null;
@@ -59,11 +60,14 @@ export class UsuarioFormDialog implements OnInit {
     this.esEdicion.set(!!u);
 
     this.form = this.fb.group({
-      nombre: [u?.nombre ?? '', Validators.required],
-      apellido: [u?.apellido ?? '', Validators.required],
+      nombre: [u?.nombre ?? '', [Validators.required, noSoloEspaciosValidator]],
+      apellido: [u?.apellido ?? '', [Validators.required, noSoloEspaciosValidator]],
       dni: [{ value: u?.dni ?? '', disabled: this.esEdicion() }, [Validators.required, Validators.pattern(/^\d{7,9}$/)]],
       email: [u?.email ?? '', [Validators.required, Validators.email]],
-      password: [u ? '' : '', u ? [Validators.minLength(8)] : [Validators.required, Validators.minLength(8)]],
+      password: [
+        u ? '' : '',
+        u ? [contrasenaMinimaValidator(8)] : [Validators.required, contrasenaMinimaValidator(8)],
+      ],
       fecha_nacimiento: [u?.fecha_nacimiento ? parsearFechaLocal(u.fecha_nacimiento) : null, Validators.required],
       telefono: [u?.telefono ?? ''],
       rol: [{ value: (u?.rol as Rol) ?? 'operador', disabled: this.esEdicion() }, Validators.required],
@@ -95,10 +99,17 @@ export class UsuarioFormDialog implements OnInit {
     const idSede = this.form.controls.id_sede;
     const idCobertura = this.form.controls.id_cobertura;
     const especialidades = this.form.controls.especialidades;
+    const fechaNacimiento = this.form.controls.fecha_nacimiento;
 
     idSede.clearValidators();
     idCobertura.clearValidators();
     especialidades.clearValidators();
+
+    const rol = this.form.getRawValue().rol;
+    fechaNacimiento.setValidators(
+      rol === 'paciente' ? Validators.required : [Validators.required, edadMinimaValidator(18)]
+    );
+    fechaNacimiento.updateValueAndValidity({ emitEvent: false });
 
     if (this.mostrarSede) {
       idSede.setValidators(Validators.required);

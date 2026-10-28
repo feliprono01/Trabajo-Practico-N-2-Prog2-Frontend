@@ -238,4 +238,8 @@ export class TurnoWizard implements OnInit {
     this.reiniciar();
     this.solicitarOtro.emit();
   }
+
+  cancelarClick(): void {
+    this.reiniciar();
+  }
 }

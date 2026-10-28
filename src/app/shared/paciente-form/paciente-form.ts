@@ -9,6 +9,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CoberturaService } from '../../core/services/cobertura';
 import { Cobertura } from '../../core/models/cobertura.model';
 import { RegistroRequest } from '../../core/models/auth.model';
+import { contrasenaMinimaValidator, noSoloEspaciosValidator } from '../../core/utils/validadores.util';
 
 @Component({
   selector: 'app-paciente-form',
@@ -38,11 +39,11 @@ export class PacienteForm implements OnInit {
   readonly coberturas = signal<Cobertura[]>([]);
 
   readonly form = this.fb.group({
-    nombre: ['', [Validators.required]],
-    apellido: ['', [Validators.required]],
+    nombre: ['', [Validators.required, noSoloEspaciosValidator]],
+    apellido: ['', [Validators.required, noSoloEspaciosValidator]],
     dni: ['', [Validators.required, Validators.pattern(/^\d{7,9}$/)]],
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(8)]],
+    password: ['', [Validators.required, contrasenaMinimaValidator(8)]],
     fecha_nacimiento: [null as Date | null, [Validators.required]],
     id_cobertura: [null as number | null, [Validators.required]],
     telefono: [''],

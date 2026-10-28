@@ -38,6 +38,7 @@ export const routes: Routes = [
       {
         path: 'admin',
         canActivate: [roleGuard],
+        runGuardsAndResolvers: 'always',
         data: { roles: ['admin'] },
         children: [
           { path: '', redirectTo: 'usuarios', pathMatch: 'full' },
@@ -53,6 +54,7 @@ export const routes: Routes = [
       {
         path: 'medico',
         canActivate: [roleGuard],
+        runGuardsAndResolvers: 'always',
         data: { roles: ['medico'] },
         children: [
           { path: '', redirectTo: 'turnos', pathMatch: 'full' },
@@ -65,6 +67,7 @@ export const routes: Routes = [
       {
         path: 'operador',
         canActivate: [roleGuard],
+        runGuardsAndResolvers: 'always',
         data: { roles: ['operador'] },
         children: [
           { path: '', redirectTo: 'agenda-turnos', pathMatch: 'full' },
@@ -77,6 +80,7 @@ export const routes: Routes = [
       {
         path: 'paciente',
         canActivate: [roleGuard],
+        runGuardsAndResolvers: 'always',
         data: { roles: ['paciente'] },
         children: [
           { path: '', redirectTo: 'turnos', pathMatch: 'full' },

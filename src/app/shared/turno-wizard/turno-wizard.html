@@ -1,5 +1,5 @@
 @if (completado()) {
-  <div class="completado">
+  <div class="wizard-card completado">
     <mat-icon>check_circle</mat-icon>
     <h2>¡Turno confirmado!</h2>
     <p>
@@ -9,6 +9,13 @@
     <button mat-flat-button color="primary" (click)="solicitarOtroClick()">Solicitar otro turno</button>
   </div>
 } @else {
+  <div class="wizard-card">
+  <div class="wizard-acciones">
+    <button mat-button type="button" (click)="cancelarClick()">
+      <mat-icon>close</mat-icon>
+      Cancelar
+    </button>
+  </div>
   <mat-stepper [selectedIndex]="pasoActual()" (selectedIndexChange)="pasoActual.set($event)" orientation="horizontal">
     <mat-step label="Especialidad">
       @if (especialidades().length === 0) {
@@ -51,6 +58,10 @@
         <div class="cargando"><mat-spinner diameter="32" /></div>
       } @else if (fechas().length === 0) {
         <app-empty-state mensaje="El médico no tiene fechas disponibles próximamente." icono="event_busy" />
+        <button mat-button (click)="pasoActual.set(pasoActual() - 1)">
+          <mat-icon>arrow_back</mat-icon>
+          Volver atrás
+        </button>
       } @else {
         <mat-nav-list>
           @for (fecha of fechas(); track fecha) {
@@ -65,6 +76,10 @@
         <div class="cargando"><mat-spinner diameter="32" /></div>
       } @else if (horarios().length === 0) {
         <app-empty-state mensaje="No quedan horarios libres para esa fecha." icono="schedule" />
+        <button mat-button (click)="pasoActual.set(pasoActual() - 1)">
+          <mat-icon>arrow_back</mat-icon>
+          Volver atrás
+        </button>
       } @else {
         <div class="horarios">
           @for (horario of horarios(); track horario) {
@@ -111,4 +126,5 @@
       </button>
     </mat-step>
   </mat-stepper>
+  </div>
 }

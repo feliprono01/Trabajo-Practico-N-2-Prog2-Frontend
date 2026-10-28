@@ -12,6 +12,7 @@ import { CoberturaService } from '../../../core/services/cobertura';
 import { UsuarioPerfil } from '../../../core/models/usuario.model';
 import { Cobertura } from '../../../core/models/cobertura.model';
 import { AlertService } from '../../../core/services/alert';
+import { contrasenaMinimaValidator } from '../../../core/utils/validadores.util';
 
 const passwordsCoinciden: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {
   const password = group.get('password')?.value;
@@ -54,7 +55,7 @@ export class MisDatos implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       telefono: [''],
       id_cobertura: [null as number | null, Validators.required],
-      password: ['', [Validators.minLength(8)]],
+      password: ['', [contrasenaMinimaValidator(8)]],
       repetirPassword: [''],
     },
     { validators: passwordsCoinciden }

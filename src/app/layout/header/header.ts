@@ -89,6 +89,12 @@ export class Header {
     });
   }
 
+  marcarTodasLeidas(): void {
+    this.notificacionService.marcarTodasLeidas().subscribe(() => {
+      this.notificaciones.update((actual) => actual.map((n) => ({ ...n, leida: 1 })));
+    });
+  }
+
   cerrarSesion(): void {
     this.authService.logout();
     this.router.navigate(['/']);

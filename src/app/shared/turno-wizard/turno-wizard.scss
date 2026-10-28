@@ -1,3 +1,15 @@
+.wizard-card {
+  background: var(--mat-sys-surface, #fff);
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  padding: 1rem;
+}
+
+.wizard-acciones {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .cargando {
   display: flex;
   justify-content: center;

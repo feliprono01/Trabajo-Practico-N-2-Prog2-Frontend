@@ -24,6 +24,12 @@ export class NotificacionService {
       .pipe(tap(() => this.contador.update((actual) => Math.max(0, actual - 1))));
   }
 
+  marcarTodasLeidas(): Observable<ApiResponse<null>> {
+    return this.http
+      .put<ApiResponse<null>>(`${environment.apiUrl}/notificaciones/leidas`, {})
+      .pipe(tap(() => this.contador.set(0)));
+  }
+
   refrescarContador(): void {
     this.http
       .get<ApiResponse<{ cantidad: number }>>(`${environment.apiUrl}/notificaciones/no-leidas`)

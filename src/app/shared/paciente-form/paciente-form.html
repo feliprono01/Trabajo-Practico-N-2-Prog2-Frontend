@@ -3,7 +3,7 @@
     <mat-form-field appearance="outline">
       <mat-label>Nombre</mat-label>
       <input matInput formControlName="nombre" />
-      @if (form.controls.nombre.hasError('required') && form.controls.nombre.touched) {
+      @if ((form.controls.nombre.hasError('required') || form.controls.nombre.hasError('soloEspacios')) && form.controls.nombre.touched) {
         <mat-error>El nombre es obligatorio</mat-error>
       }
     </mat-form-field>
@@ -11,7 +11,7 @@
     <mat-form-field appearance="outline">
       <mat-label>Apellido</mat-label>
       <input matInput formControlName="apellido" />
-      @if (form.controls.apellido.hasError('required') && form.controls.apellido.touched) {
+      @if ((form.controls.apellido.hasError('required') || form.controls.apellido.hasError('soloEspacios')) && form.controls.apellido.touched) {
         <mat-error>El apellido es obligatorio</mat-error>
       }
     </mat-form-field>
@@ -48,7 +48,7 @@
       @if (form.controls.password.hasError('required') && form.controls.password.touched) {
         <mat-error>La contraseña es obligatoria</mat-error>
       }
-      @if (form.controls.password.hasError('minlength') && form.controls.password.touched) {
+      @if (form.controls.password.hasError('passwordCorta') && form.controls.password.touched) {
         <mat-error>Mínimo 8 caracteres</mat-error>
       }
     </mat-form-field>

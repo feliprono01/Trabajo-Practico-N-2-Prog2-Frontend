@@ -14,7 +14,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
     catchError((error) => {
       const esRutaExcluida = RUTAS_SIN_LOGOUT_AUTOMATICO.some((ruta) => req.url.includes(ruta));
 
-      if (error.status === 401 && !esRutaExcluida && authService.estaLogueado()) {
+      if (error.status === 401 && !esRutaExcluida) {
         authService.logout();
         router.navigate(['/login']);
       }

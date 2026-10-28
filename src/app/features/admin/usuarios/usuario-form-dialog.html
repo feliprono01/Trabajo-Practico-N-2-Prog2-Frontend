@@ -4,11 +4,17 @@
     <mat-form-field appearance="outline">
       <mat-label>Nombre</mat-label>
       <input matInput formControlName="nombre" />
+      @if (form.controls.nombre.hasError('required') || form.controls.nombre.hasError('soloEspacios')) {
+        <mat-error>El nombre es obligatorio</mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>Apellido</mat-label>
       <input matInput formControlName="apellido" />
+      @if (form.controls.apellido.hasError('required') || form.controls.apellido.hasError('soloEspacios')) {
+        <mat-error>El apellido es obligatorio</mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field appearance="outline">
@@ -30,7 +36,7 @@
     <mat-form-field appearance="outline">
       <mat-label>{{ esEdicion() ? 'Nueva contraseña (opcional)' : 'Contraseña' }}</mat-label>
       <input matInput type="password" formControlName="password" />
-      @if (form.controls.password.hasError('minlength')) {
+      @if (form.controls.password.hasError('passwordCorta')) {
         <mat-error>Mínimo 8 caracteres</mat-error>
       }
     </mat-form-field>
@@ -40,6 +46,9 @@
       <input matInput [matDatepicker]="picker" formControlName="fecha_nacimiento" />
       <mat-datepicker-toggle matIconSuffix [for]="picker" />
       <mat-datepicker #picker />
+      @if (form.controls.fecha_nacimiento.hasError('edadMinima')) {
+        <mat-error>Debe ser mayor de edad (18 años)</mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field appearance="outline">

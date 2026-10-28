@@ -6,6 +6,7 @@ export interface UsuarioSesion {
   apellido: string;
   rol: Rol;
   id_sede: number | null;
+  sede: string | null;
 }
 
 export interface UsuarioPerfil {

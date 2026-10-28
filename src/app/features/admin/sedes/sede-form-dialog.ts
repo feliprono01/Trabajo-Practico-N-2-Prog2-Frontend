@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Sede, SedeRequest } from '../../../core/models/sede.model';
+import { noSoloEspaciosValidator } from '../../../core/utils/validadores.util';
 
 @Component({
   selector: 'app-sede-form-dialog',
@@ -17,21 +18,21 @@ import { Sede, SedeRequest } from '../../../core/models/sede.model';
         <mat-form-field appearance="outline">
           <mat-label>Nombre</mat-label>
           <input matInput formControlName="nombre" />
-          @if (form.controls.nombre.hasError('required')) {
+          @if (form.controls.nombre.hasError('required') || form.controls.nombre.hasError('soloEspacios')) {
             <mat-error>El nombre es obligatorio</mat-error>
           }
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Dirección</mat-label>
           <input matInput formControlName="direccion" />
-          @if (form.controls.direccion.hasError('required')) {
+          @if (form.controls.direccion.hasError('required') || form.controls.direccion.hasError('soloEspacios')) {
             <mat-error>La dirección es obligatoria</mat-error>
           }
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Teléfono</mat-label>
           <input matInput formControlName="telefono" />
-          @if (form.controls.telefono.hasError('required')) {
+          @if (form.controls.telefono.hasError('required') || form.controls.telefono.hasError('soloEspacios')) {
             <mat-error>El teléfono es obligatorio</mat-error>
           }
         </mat-form-field>
@@ -62,9 +63,9 @@ export class SedeFormDialog {
     @Inject(MAT_DIALOG_DATA) public readonly data: { sede: Sede | null }
   ) {
     this.form = this.fb.group({
-      nombre: [data.sede?.nombre ?? '', Validators.required],
-      direccion: [data.sede?.direccion ?? '', Validators.required],
-      telefono: [data.sede?.telefono ?? '', Validators.required],
+      nombre: [data.sede?.nombre ?? '', [Validators.required, noSoloEspaciosValidator]],
+      direccion: [data.sede?.direccion ?? '', [Validators.required, noSoloEspaciosValidator]],
+      telefono: [data.sede?.telefono ?? '', [Validators.required, noSoloEspaciosValidator]],
     });
   }
 

@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Especialidad, EspecialidadRequest } from '../../../core/models/especialidad.model';
+import { noSoloEspaciosValidator } from '../../../core/utils/validadores.util';
 
 @Component({
   selector: 'app-especialidad-form-dialog',
@@ -17,7 +18,7 @@ import { Especialidad, EspecialidadRequest } from '../../../core/models/especial
         <mat-form-field appearance="outline">
           <mat-label>Descripción</mat-label>
           <input matInput formControlName="descripcion" />
-          @if (form.controls.descripcion.hasError('required')) {
+          @if (form.controls.descripcion.hasError('required') || form.controls.descripcion.hasError('soloEspacios')) {
             <mat-error>La descripción es obligatoria</mat-error>
           }
         </mat-form-field>
@@ -45,7 +46,7 @@ export class EspecialidadFormDialog {
     @Inject(MAT_DIALOG_DATA) public readonly data: { especialidad: Especialidad | null }
   ) {
     this.form = this.fb.group({
-      descripcion: [data.especialidad?.descripcion ?? '', Validators.required],
+      descripcion: [data.especialidad?.descripcion ?? '', [Validators.required, noSoloEspaciosValidator]],
     });
   }
 

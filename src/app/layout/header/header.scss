@@ -88,6 +88,11 @@
   opacity: 0.75;
 }
 
+.usuario-sede {
+  font-size: 0.7rem;
+  opacity: 0.6;
+}
+
 .menu-notificaciones {
   max-width: 360px;
 }
@@ -125,4 +130,10 @@
 .notif-no-leida {
   background: color-mix(in srgb, var(--mat-sys-primary, #3f51b5) 8%, transparent);
   font-weight: 600;
+}
+
+.notif-marcar-todas {
+  font-size: 0.8rem;
+  color: var(--mat-sys-primary, #3f51b5);
+  border-bottom: 1px solid var(--mat-sys-outline-variant, #ddd);
 }

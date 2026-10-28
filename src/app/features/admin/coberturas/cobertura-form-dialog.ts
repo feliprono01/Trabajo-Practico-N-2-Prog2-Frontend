@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Cobertura, CoberturaRequest } from '../../../core/models/cobertura.model';
+import { noSoloEspaciosValidator } from '../../../core/utils/validadores.util';
 
 @Component({
   selector: 'app-cobertura-form-dialog',
@@ -17,7 +18,7 @@ import { Cobertura, CoberturaRequest } from '../../../core/models/cobertura.mode
         <mat-form-field appearance="outline">
           <mat-label>Nombre</mat-label>
           <input matInput formControlName="nombre" />
-          @if (form.controls.nombre.hasError('required')) {
+          @if (form.controls.nombre.hasError('required') || form.controls.nombre.hasError('soloEspacios')) {
             <mat-error>El nombre es obligatorio</mat-error>
           }
         </mat-form-field>
@@ -45,7 +46,7 @@ export class CoberturaFormDialog {
     @Inject(MAT_DIALOG_DATA) public readonly data: { cobertura: Cobertura | null }
   ) {
     this.form = this.fb.group({
-      nombre: [data.cobertura?.nombre ?? '', Validators.required],
+      nombre: [data.cobertura?.nombre ?? '', [Validators.required, noSoloEspaciosValidator]],
     });
   }
 
