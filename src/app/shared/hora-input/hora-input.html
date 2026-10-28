@@ -1,17 +1,16 @@
 @if (label) {
-  <label class="hora-input-label">{{ label }}</label>
+  <span class="hora-input-label">{{ label }}</span>
 }
 <div class="hora-input" [class.deshabilitado]="deshabilitado()">
   <div class="segmento">
     <button
       type="button"
-      mat-icon-button
-      class="flecha"
+      class="chevron"
       [disabled]="deshabilitado()"
       (click)="incrementarHora()"
       aria-label="Aumentar hora"
     >
-      <mat-icon>keyboard_arrow_up</mat-icon>
+      <mat-icon>expand_less</mat-icon>
     </button>
     <input
       type="text"
@@ -25,13 +24,12 @@
     />
     <button
       type="button"
-      mat-icon-button
-      class="flecha"
+      class="chevron"
       [disabled]="deshabilitado()"
       (click)="decrementarHora()"
       aria-label="Disminuir hora"
     >
-      <mat-icon>keyboard_arrow_down</mat-icon>
+      <mat-icon>expand_more</mat-icon>
     </button>
   </div>
 
@@ -40,13 +38,12 @@
   <div class="segmento">
     <button
       type="button"
-      mat-icon-button
-      class="flecha"
+      class="chevron"
       [disabled]="deshabilitado()"
       (click)="incrementarMinuto()"
       aria-label="Aumentar minutos"
     >
-      <mat-icon>keyboard_arrow_up</mat-icon>
+      <mat-icon>expand_less</mat-icon>
     </button>
     <input
       type="text"
@@ -60,13 +57,12 @@
     />
     <button
       type="button"
-      mat-icon-button
-      class="flecha"
+      class="chevron"
       [disabled]="deshabilitado()"
       (click)="decrementarMinuto()"
       aria-label="Disminuir minutos"
     >
-      <mat-icon>keyboard_arrow_down</mat-icon>
+      <mat-icon>expand_more</mat-icon>
     </button>
   </div>
 </div>

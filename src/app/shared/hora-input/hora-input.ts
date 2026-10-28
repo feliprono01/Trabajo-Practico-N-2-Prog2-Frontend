@@ -1,12 +1,11 @@
 import { Component, Input, forwardRef, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-hora-input',
   standalone: true,
-  imports: [MatIconModule, MatButtonModule],
+  imports: [MatIconModule],
   templateUrl: './hora-input.html',
   styleUrl: './hora-input.scss',
   providers: [
