@@ -6,7 +6,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
 import { Sede } from '../../core/models/sede.model';
 import { EspecialidadResumen } from '../../core/models/usuario.model';
 import { RangoAgenda, RangoAgendaRequest } from '../../core/models/agenda.model';
@@ -42,7 +41,6 @@ const horaSalidaPosterior: ValidatorFn = (group): ValidationErrors | null => {
     MatInputModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatNativeDateModule,
   ],
   templateUrl: './rango-agenda-form-dialog.html',
   styleUrl: './rango-agenda-form-dialog.scss',

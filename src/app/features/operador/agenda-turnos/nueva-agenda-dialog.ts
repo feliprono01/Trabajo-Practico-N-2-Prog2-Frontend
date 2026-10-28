@@ -6,7 +6,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
 import { MedicoService } from '../../../core/services/medico';
 import { Medico } from '../../../core/models/medico.model';
 import { RangoAgendaRequest } from '../../../core/models/agenda.model';
@@ -32,7 +31,6 @@ const horaSalidaPosterior: ValidatorFn = (group): ValidationErrors | null => {
     MatInputModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatNativeDateModule,
   ],
   templateUrl: './nueva-agenda-dialog.html',
   styleUrl: './nueva-agenda-dialog.scss',

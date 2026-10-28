@@ -4,12 +4,13 @@ import localeEsAr from '@angular/common/locales/es-AR';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
+import { DateAdapter, MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 import { routes } from './app.routes';
 import { authInterceptor } from './core/interceptors/auth-interceptor';
 import { errorInterceptor } from './core/interceptors/error-interceptor';
+import { EsArDateAdapter } from './core/adapters/es-ar-date-adapter';
 
 registerLocaleData(localeEsAr);
 
@@ -21,6 +22,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     provideCharts(withDefaultRegisterables()),
     provideNativeDateAdapter(),
+    { provide: DateAdapter, useClass: EsArDateAdapter },
     { provide: LOCALE_ID, useValue: 'es-AR' },
     { provide: MAT_DATE_LOCALE, useValue: 'es-AR' },
   ]

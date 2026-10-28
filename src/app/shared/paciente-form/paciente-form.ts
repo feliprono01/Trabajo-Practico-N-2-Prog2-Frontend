@@ -5,7 +5,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CoberturaService } from '../../core/services/cobertura';
 import { Cobertura } from '../../core/models/cobertura.model';
@@ -21,7 +20,6 @@ import { RegistroRequest } from '../../core/models/auth.model';
     MatSelectModule,
     MatButtonModule,
     MatDatepickerModule,
-    MatNativeDateModule,
     MatProgressSpinnerModule,
   ],
   templateUrl: './paciente-form.html',

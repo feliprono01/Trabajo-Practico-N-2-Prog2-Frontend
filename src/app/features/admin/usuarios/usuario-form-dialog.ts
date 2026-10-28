@@ -6,7 +6,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
 import { Sede } from '../../../core/models/sede.model';
 import { Especialidad } from '../../../core/models/especialidad.model';
 import { Cobertura } from '../../../core/models/cobertura.model';
@@ -39,7 +38,6 @@ const ROL_PACIENTE: { valor: Rol; etiqueta: string } = { valor: 'paciente', etiq
     MatInputModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatNativeDateModule,
   ],
   templateUrl: './usuario-form-dialog.html',
   styleUrl: './usuario-form-dialog.scss',
