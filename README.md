@@ -116,6 +116,7 @@ src/app/
 ├── shared/
 │   ├── confirm-dialog/          # diálogo de confirmación genérico (bajas)
 │   ├── empty-state/             # mensaje reutilizable para listados vacíos
+│   ├── hora-input/              # selector de hora con flechas (reemplaza el input nativo type=time)
 │   ├── paciente-form/           # formulario de alta de paciente (registro público y operador)
 │   ├── rango-agenda-form-dialog/ # alta/edición de un rango horario de agenda
 │   └── turno-wizard/            # wizard de solicitud de turno (paciente y operador)
@@ -134,5 +135,28 @@ src/app/
 
 Cada rol (`admin`, `medico`, `operador`, `paciente`) tiene su propio prefijo de
 rutas (`/admin`, `/medico`, `/operador`, `/paciente`), protegido por `roleGuard`
-tanto desde el menú como por URL directa. La ruta `/perfil` está protegida solo
+tanto desde el menú como por URL directa, con `runGuardsAndResolvers: 'always'`
+para que el guard se reevalúe también al navegar entre pantallas del mismo rol
+(no solo al entrar a la sección). La ruta `/perfil` está protegida solo
 por `authGuard` (cualquier usuario logueado, de solo lectura).
+
+## Notas de la revisión manual
+
+Tras una ronda de pruebas manuales sobre la entrega, se corrigieron y ajustaron:
+
+- Validaciones de formulario: ningún campo de texto (nombre, apellido,
+  dirección, teléfono, descripción) acepta strings de solo espacios en blanco;
+  las contraseñas exigen 8 caracteres reales (no espacios); alta/edición de
+  operador, médico y administrador exige mayoría de edad (no aplica a
+  pacientes).
+- El selector de hora (alta/edición de agenda) es un componente propio
+  (`app-hora-input`) con flechas para incrementar/decrementar hora y minutos,
+  en vez del `input[type=time]` nativo del navegador.
+- El header del operador muestra su sede debajo del nombre.
+- El paginador de Angular Material está traducido al español
+  (`MatPaginatorIntl` provisto globalmente).
+- Las notificaciones tienen un botón para marcar todas como leídas de una vez.
+- Se corrigió un caso de "token vencido" donde, si se invalidaba la sesión
+  mientras se navegaba entre pantallas del mismo rol, quedaba un estado mixto
+  (sidebar del layout + formulario de login superpuestos) en vez de redirigir
+  limpio al login.
