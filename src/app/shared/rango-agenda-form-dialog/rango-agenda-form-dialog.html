@@ -1,0 +1,42 @@
+<h2 mat-dialog-title>{{ data.rango ? 'Editar rango horario' : 'Nuevo rango horario' }}</h2>
+<form [formGroup]="form" (ngSubmit)="guardar()">
+  <mat-dialog-content class="contenido">
+    <mat-form-field appearance="outline">
+      <mat-label>Fecha</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="fecha" />
+      <mat-datepicker-toggle matIconSuffix [for]="picker" />
+      <mat-datepicker #picker />
+    </mat-form-field>
+
+    <div class="fila">
+      <app-hora-input label="Hora de entrada" formControlName="hora_entrada" />
+      <app-hora-input label="Hora de salida" formControlName="hora_salida" />
+    </div>
+
+    @if (form.hasError('salidaInvalida') && (form.touched || form.dirty)) {
+      <p class="error-form">La hora de salida debe ser posterior a la de entrada.</p>
+    }
+
+    <mat-form-field appearance="outline">
+      <mat-label>Especialidad</mat-label>
+      <mat-select formControlName="id_especialidad">
+        @for (especialidad of data.especialidades; track especialidad.id) {
+          <mat-option [value]="especialidad.id">{{ especialidad.descripcion }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Sede</mat-label>
+      <mat-select formControlName="id_sede">
+        @for (sede of data.sedes; track sede.id) {
+          <mat-option [value]="sede.id">{{ sede.nombre }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" [mat-dialog-close]="null">Cancelar</button>
+    <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid">Guardar</button>
+  </mat-dialog-actions>
+</form>

@@ -4,7 +4,7 @@ import { Observable, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { ApiResponse } from '../models/api-response.model';
 import { LoginRequest, LoginResponse, RegistroRequest, RegistroResponse } from '../models/auth.model';
-import { UsuarioPerfil, UsuarioSesion } from '../models/usuario.model';
+import { ActualizarPerfilRequest, UsuarioPerfil, UsuarioSesion } from '../models/usuario.model';
 
 const TOKEN_KEY = 'clinica_token';
 const USUARIO_KEY = 'clinica_usuario';
@@ -35,6 +35,14 @@ export class AuthService {
 
   perfil(): Observable<ApiResponse<UsuarioPerfil>> {
     return this.http.get<ApiResponse<UsuarioPerfil>>(`${environment.apiUrl}/auth/perfil`);
+  }
+
+  actualizarPerfil(datos: ActualizarPerfilRequest): Observable<ApiResponse<UsuarioPerfil>> {
+    return this.http.put<ApiResponse<UsuarioPerfil>>(`${environment.apiUrl}/auth/perfil`, datos);
+  }
+
+  getId(): number | null {
+    return this.usuarioActual()?.id ?? null;
   }
 
   logout(): void {

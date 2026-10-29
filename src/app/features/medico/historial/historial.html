@@ -1,0 +1,69 @@
+<h1>Historial clínico</h1>
+
+<div class="buscador">
+  <mat-form-field appearance="outline" class="campo-busqueda">
+    <mat-label>DNI o apellido del paciente</mat-label>
+    <input matInput [formControl]="termino" (keyup.enter)="buscar()" />
+  </mat-form-field>
+  <button mat-flat-button color="primary" (click)="buscar()">
+    <mat-icon>search</mat-icon>
+    Buscar
+  </button>
+</div>
+
+@if (!pacienteSeleccionado()) {
+  @if (buscando()) {
+    <div class="cargando">
+      <mat-spinner diameter="32" />
+    </div>
+  } @else if (resultados().length === 0) {
+    <app-empty-state mensaje="Sin pacientes disponibles." icono="group_off" />
+  } @else {
+    <div class="resultados">
+      @for (paciente of resultados(); track paciente.id) {
+        <mat-card class="resultado" (click)="seleccionar(paciente)">
+          <mat-card-content>
+            <strong>{{ paciente.apellido }}, {{ paciente.nombre }}</strong>
+            <p>DNI {{ paciente.dni }}</p>
+          </mat-card-content>
+        </mat-card>
+      }
+    </div>
+  }
+}
+
+@if (pacienteSeleccionado()) {
+  <button mat-button (click)="volverAlListado()">
+    <mat-icon>arrow_back</mat-icon>
+    Volver al listado
+  </button>
+
+  <h2 class="titulo-paciente">
+    Historial de {{ pacienteSeleccionado()!.apellido }}, {{ pacienteSeleccionado()!.nombre }}
+  </h2>
+
+  @if (cargandoHistorial()) {
+    <div class="cargando">
+      <mat-spinner diameter="32" />
+    </div>
+  } @else if (historial().length === 0) {
+    <app-empty-state mensaje="No hay registros de historial clínico atendidos por vos para este paciente." icono="description" />
+  } @else {
+    <div class="historial">
+      @for (registro of historial(); track registro.id) {
+        <mat-card>
+          <mat-card-content>
+            <p class="fecha">{{ registro.fecha_turno | date: 'dd/MM/yyyy' }} {{ registro.hora_turno }}</p>
+            <p><strong>Diagnóstico:</strong> {{ registro.diagnostico }}</p>
+            @if (registro.tratamiento) {
+              <p><strong>Tratamiento:</strong> {{ registro.tratamiento }}</p>
+            }
+            @if (registro.observaciones) {
+              <p><strong>Observaciones:</strong> {{ registro.observaciones }}</p>
+            }
+          </mat-card-content>
+        </mat-card>
+      }
+    </div>
+  }
+}

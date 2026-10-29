@@ -1,0 +1,21 @@
+.encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.filtro {
+  width: 100%;
+  max-width: 400px;
+}
+
+.cargando {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.tabla {
+  width: 100%;
+}

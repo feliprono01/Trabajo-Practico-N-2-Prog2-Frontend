@@ -1,0 +1,31 @@
+.cargando {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.grilla {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+.solo-lectura p {
+  margin: 0.4rem 0;
+}
+
+.editable form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.editable h3 {
+  margin: 0.5rem 0 0;
+}
+
+button[type='submit'] {
+  margin-top: 0.5rem;
+  align-self: flex-start;
+}

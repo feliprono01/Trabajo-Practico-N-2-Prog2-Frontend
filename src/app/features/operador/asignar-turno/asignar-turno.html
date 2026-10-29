@@ -1,0 +1,48 @@
+<h1>Asignar turno</h1>
+
+@if (!pacienteSeleccionado()) {
+  <div class="buscador">
+    <mat-form-field appearance="outline" class="campo-busqueda">
+      <mat-label>Filtrar por DNI o apellido</mat-label>
+      <input matInput [formControl]="termino" />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
+
+  @if (buscando()) {
+    <div class="cargando">
+      <mat-spinner diameter="32" />
+    </div>
+  } @else if (resultados().length === 0) {
+    <app-empty-state mensaje="No se encontraron pacientes." icono="group_off" />
+  } @else {
+    <div class="resultados">
+      @for (paciente of resultados(); track paciente.id) {
+        <mat-card class="resultado" (click)="seleccionar(paciente)">
+          <mat-card-content>
+            <strong>{{ paciente.apellido }}, {{ paciente.nombre }}</strong>
+            <p>DNI {{ paciente.dni }} · {{ paciente.cobertura || 'Sin cobertura' }}</p>
+          </mat-card-content>
+        </mat-card>
+      }
+    </div>
+
+    <mat-paginator [length]="total()" [pageIndex]="page - 1" [pageSize]="pageSize" [pageSizeOptions]="[20]" (page)="cambiarPagina($event)" />
+  }
+} @else {
+  <div class="paciente-elegido">
+    <p>
+      Asignando turno para <strong>{{ pacienteSeleccionado()!.apellido }}, {{ pacienteSeleccionado()!.nombre }}</strong>
+    </p>
+    <button mat-button (click)="otroPaciente()">Cambiar paciente</button>
+  </div>
+
+  @if (sedePropia) {
+    <app-turno-wizard
+      [sedeFija]="sedePropia"
+      [idPacienteFijo]="pacienteSeleccionado()!.id"
+      [coberturaPaciente]="pacienteSeleccionado()!.cobertura"
+      (solicitarOtro)="otroPaciente()"
+    />
+  }
+}

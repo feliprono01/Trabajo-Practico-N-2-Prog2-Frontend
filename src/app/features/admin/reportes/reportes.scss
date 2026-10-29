@@ -1,0 +1,61 @@
+.filtros {
+  display: flex;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.error-rango {
+  color: var(--mat-sys-error, #b3261e);
+  margin: -0.5rem 0 1rem;
+}
+
+.cargando {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.grilla {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(300px, 1fr));
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.grafico {
+  height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tarjeta-tasa {
+  display: flex;
+  flex-direction: column;
+}
+
+.tasa-contenido {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.35rem;
+}
+
+.estadistica {
+  font-size: 2.75rem;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1;
+}
+
+.tasa-detalle {
+  margin: 0;
+  color: var(--mat-sys-on-surface-variant, #666);
+}
+
+.tabla {
+  width: 100%;
+}

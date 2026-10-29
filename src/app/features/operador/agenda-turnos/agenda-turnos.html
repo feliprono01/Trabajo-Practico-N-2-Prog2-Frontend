@@ -1,0 +1,77 @@
+<div class="encabezado">
+  <h1>Agenda y turnos</h1>
+  <button mat-flat-button color="primary" (click)="abrirNuevaAgenda()">
+    <mat-icon>add</mat-icon>
+    Nueva agenda
+  </button>
+</div>
+
+<div class="filtros">
+  <mat-form-field appearance="outline">
+    <mat-label>Fecha</mat-label>
+    <input matInput [matDatepicker]="picker" [formControl]="fecha" />
+    <mat-datepicker-toggle matIconSuffix [for]="picker" />
+    <mat-datepicker #picker />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Sede</mat-label>
+    <mat-select [formControl]="idSede">
+      @for (sede of sedes(); track sede.id) {
+        <mat-option [value]="sede.id">{{ sede.nombre }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+</div>
+
+@if (cargando()) {
+  <div class="cargando">
+    <mat-spinner diameter="40" />
+  </div>
+} @else if (rangos().length === 0) {
+  <app-empty-state mensaje="No hay médicos con agenda para esta fecha y sede." icono="event_busy" />
+} @else {
+  <table mat-table [dataSource]="rangos()" class="tabla">
+    <ng-container matColumnDef="medico">
+      <th mat-header-cell *matHeaderCellDef>Médico</th>
+      <td mat-cell *matCellDef="let r">{{ r.medico_apellido }}, {{ r.medico_nombre }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="especialidad">
+      <th mat-header-cell *matHeaderCellDef>Especialidad</th>
+      <td mat-cell *matCellDef="let r">{{ r.especialidad }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="horario">
+      <th mat-header-cell *matHeaderCellDef>Horario</th>
+      <td mat-cell *matCellDef="let r">{{ r.hora_entrada }} - {{ r.hora_salida }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="sede">
+      <th mat-header-cell *matHeaderCellDef>Sede</th>
+      <td mat-cell *matCellDef="let r">{{ r.sede }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef>Acciones</th>
+      <td mat-cell *matCellDef="let r">
+        @if (esSedePropia(r)) {
+          <button mat-icon-button matTooltip="Editar agenda" (click)="editar(r)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button matTooltip="Eliminar rango" (click)="eliminar(r)">
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button mat-icon-button matTooltip="Ver turnos confirmados" (click)="verTurnos(r)">
+            <mat-icon>visibility</mat-icon>
+          </button>
+        } @else {
+          <span class="solo-lectura">Solo lectura</span>
+        }
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnas"></tr>
+  </table>
+}

@@ -1,0 +1,10 @@
+<h1>Alta de pacientes</h1>
+
+<mat-card appearance="outlined" class="form-card">
+  <app-paciente-form
+    [cargando]="cargando()"
+    [errorMensaje]="errorMensaje()"
+    textoBoton="Registrar paciente"
+    (enviarFormulario)="registrar($event)"
+  />
+</mat-card>

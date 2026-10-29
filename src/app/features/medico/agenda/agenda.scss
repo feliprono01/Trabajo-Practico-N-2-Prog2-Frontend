@@ -1,0 +1,35 @@
+.encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.selector-fecha {
+  max-width: 220px;
+  margin-bottom: 1rem;
+}
+
+.cargando {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.rangos {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.rango-contenido {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+}
+
+.rango-contenido p {
+  margin: 0.25rem 0 0;
+  color: var(--mat-sys-on-surface-variant, #666);
+}

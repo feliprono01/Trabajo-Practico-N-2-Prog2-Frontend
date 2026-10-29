@@ -1,0 +1,39 @@
+.buscador {
+  display: flex;
+  gap: 1rem;
+  align-items: start;
+  margin: 1rem 0;
+}
+
+.campo-busqueda {
+  width: 100%;
+  max-width: 360px;
+}
+
+.cargando {
+  display: flex;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.resultados {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 420px;
+}
+
+.resultado {
+  cursor: pointer;
+}
+
+.resultado:hover {
+  background: var(--mat-sys-surface-variant, #f1f1f1);
+}
+
+.paciente-elegido {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem 0;
+}

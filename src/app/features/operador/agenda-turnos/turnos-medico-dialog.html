@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>Turnos confirmados — {{ data.medicoNombre }}</h2>
+<mat-dialog-content class="contenido">
+  @if (cargando()) {
+    <div class="cargando"><mat-spinner diameter="32" /></div>
+  } @else if (turnos().length === 0) {
+    <app-empty-state mensaje="No hay turnos confirmados para este médico en la fecha seleccionada." icono="event_available" />
+  } @else {
+    <mat-list>
+      @for (turno of turnos(); track turno.id) {
+        <mat-list-item>
+          <span matListItemTitle>{{ turno.hora }} — {{ turno.paciente_apellido }}, {{ turno.paciente_nombre }}</span>
+          <button mat-icon-button matListItemMeta (click)="cancelar(turno)" matTooltip="Cancelar turno">
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-list-item>
+      }
+    </mat-list>
+  }
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="null">Cerrar</button>
+</mat-dialog-actions>
