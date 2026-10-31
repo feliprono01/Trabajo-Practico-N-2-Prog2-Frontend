@@ -11,19 +11,19 @@
     <form [formGroup]="form" (ngSubmit)="enviar()" class="login-form">
       <mat-form-field appearance="outline">
         <mat-label>DNI</mat-label>
-        <input matInput formControlName="dni" inputmode="numeric" autocomplete="username" />
-        @if (form.controls.dni.hasError('required') && form.controls.dni.touched) {
+        <input matInput formControlName="dni" inputmode="numeric" autocomplete="username" [errorStateMatcher]="matcher" />
+        @if (form.controls.dni.hasError('required') && intentoEnviar()) {
           <mat-error>El DNI es obligatorio</mat-error>
         }
-        @if (form.controls.dni.hasError('pattern') && form.controls.dni.touched) {
+        @if (form.controls.dni.hasError('pattern') && intentoEnviar()) {
           <mat-error>El DNI debe ser numérico (7 a 9 dígitos)</mat-error>
         }
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Contraseña</mat-label>
-        <input matInput type="password" formControlName="password" autocomplete="current-password" />
-        @if (form.controls.password.hasError('required') && form.controls.password.touched) {
+        <input matInput type="password" formControlName="password" autocomplete="current-password" [errorStateMatcher]="matcher" />
+        @if (form.controls.password.hasError('required') && intentoEnviar()) {
           <mat-error>La contraseña es obligatoria</mat-error>
         }
       </mat-form-field>

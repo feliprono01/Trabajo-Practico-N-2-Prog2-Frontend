@@ -18,6 +18,40 @@ export function contrasenaMinimaValidator(longitudMinima: number): ValidatorFn {
   };
 }
 
+export const fechaNacimientoValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+  const valor = control.value as string;
+  if (!valor) {
+    return null;
+  }
+
+  const coincidencia = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(valor);
+  if (!coincidencia) {
+    return { invalida: true };
+  }
+
+  const dia = Number(coincidencia[1]);
+  const mes = Number(coincidencia[2]);
+  const anio = Number(coincidencia[3]);
+
+  if (mes < 1 || mes > 12 || dia < 1 || dia > 31 || anio < 1900) {
+    return { invalida: true };
+  }
+
+  const fecha = new Date(anio, mes - 1, dia);
+  const esFechaReal = fecha.getFullYear() === anio && fecha.getMonth() === mes - 1 && fecha.getDate() === dia;
+  if (!esFechaReal) {
+    return { invalida: true };
+  }
+
+  const hoy = new Date();
+  hoy.setHours(0, 0, 0, 0);
+  if (fecha > hoy) {
+    return { futura: true };
+  }
+
+  return null;
+};
+
 export function edadMinimaValidator(aniosMinimos: number): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     const valor = control.value as Date | null;

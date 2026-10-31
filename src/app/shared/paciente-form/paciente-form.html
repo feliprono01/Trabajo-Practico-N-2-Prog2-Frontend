@@ -2,16 +2,16 @@
   <div class="campo-fila">
     <mat-form-field appearance="outline">
       <mat-label>Nombre</mat-label>
-      <input matInput formControlName="nombre" />
-      @if ((form.controls.nombre.hasError('required') || form.controls.nombre.hasError('soloEspacios')) && form.controls.nombre.touched) {
+      <input matInput formControlName="nombre" [errorStateMatcher]="matcher" />
+      @if ((form.controls.nombre.hasError('required') || form.controls.nombre.hasError('soloEspacios')) && intentoEnviar()) {
         <mat-error>El nombre es obligatorio</mat-error>
       }
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>Apellido</mat-label>
-      <input matInput formControlName="apellido" />
-      @if ((form.controls.apellido.hasError('required') || form.controls.apellido.hasError('soloEspacios')) && form.controls.apellido.touched) {
+      <input matInput formControlName="apellido" [errorStateMatcher]="matcher" />
+      @if ((form.controls.apellido.hasError('required') || form.controls.apellido.hasError('soloEspacios')) && intentoEnviar()) {
         <mat-error>El apellido es obligatorio</mat-error>
       }
     </mat-form-field>
@@ -20,22 +20,22 @@
   <div class="campo-fila">
     <mat-form-field appearance="outline">
       <mat-label>DNI</mat-label>
-      <input matInput formControlName="dni" inputmode="numeric" />
-      @if (form.controls.dni.hasError('required') && form.controls.dni.touched) {
+      <input matInput formControlName="dni" inputmode="numeric" [errorStateMatcher]="matcher" />
+      @if (form.controls.dni.hasError('required') && intentoEnviar()) {
         <mat-error>El DNI es obligatorio</mat-error>
       }
-      @if (form.controls.dni.hasError('pattern') && form.controls.dni.touched) {
+      @if (form.controls.dni.hasError('pattern') && intentoEnviar()) {
         <mat-error>DNI numérico (7 a 9 dígitos)</mat-error>
       }
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>Email</mat-label>
-      <input matInput type="email" formControlName="email" />
-      @if (form.controls.email.hasError('required') && form.controls.email.touched) {
+      <input matInput type="email" formControlName="email" [errorStateMatcher]="matcher" />
+      @if (form.controls.email.hasError('required') && intentoEnviar()) {
         <mat-error>El email es obligatorio</mat-error>
       }
-      @if (form.controls.email.hasError('email') && form.controls.email.touched) {
+      @if (form.controls.email.hasError('email') && intentoEnviar()) {
         <mat-error>Ingresá un email válido</mat-error>
       }
     </mat-form-field>
@@ -44,35 +44,55 @@
   <div class="campo-fila">
     <mat-form-field appearance="outline">
       <mat-label>Contraseña</mat-label>
-      <input matInput type="password" formControlName="password" />
-      @if (form.controls.password.hasError('required') && form.controls.password.touched) {
+      <input matInput type="password" formControlName="password" [errorStateMatcher]="matcher" />
+      @if (form.controls.password.hasError('required') && intentoEnviar()) {
         <mat-error>La contraseña es obligatoria</mat-error>
       }
-      @if (form.controls.password.hasError('passwordCorta') && form.controls.password.touched) {
+      @if (form.controls.password.hasError('passwordCorta') && intentoEnviar()) {
         <mat-error>Mínimo 8 caracteres</mat-error>
       }
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>Fecha de nacimiento</mat-label>
-      <input matInput [matDatepicker]="picker" formControlName="fecha_nacimiento" />
+      <input
+        matInput
+        formControlName="fecha_nacimiento"
+        placeholder="dd/mm/aaaa"
+        inputmode="numeric"
+        maxlength="10"
+        [errorStateMatcher]="matcher"
+        (input)="onFechaInput($event)"
+      />
       <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-      @if (form.controls.fecha_nacimiento.hasError('required') && form.controls.fecha_nacimiento.touched) {
+      @if (form.controls.fecha_nacimiento.hasError('required') && intentoEnviar()) {
         <mat-error>Obligatoria</mat-error>
       }
+      @if (form.controls.fecha_nacimiento.hasError('invalida') && intentoEnviar()) {
+        <mat-error>Ingresá una fecha válida (dd/mm/aaaa)</mat-error>
+      }
+      @if (form.controls.fecha_nacimiento.hasError('futura') && intentoEnviar()) {
+        <mat-error>La fecha no puede ser futura</mat-error>
+      }
     </mat-form-field>
+    <input
+      class="fecha-picker-oculto"
+      [matDatepicker]="picker"
+      [max]="hoyMax"
+      (dateChange)="onCalendarSeleccion($event.value)"
+    />
+    <mat-datepicker #picker></mat-datepicker>
   </div>
 
   <div class="campo-fila">
     <mat-form-field appearance="outline">
       <mat-label>Cobertura</mat-label>
-      <mat-select formControlName="id_cobertura">
+      <mat-select formControlName="id_cobertura" [errorStateMatcher]="matcher">
         @for (cobertura of coberturas(); track cobertura.id) {
           <mat-option [value]="cobertura.id">{{ cobertura.nombre }}</mat-option>
         }
       </mat-select>
-      @if (form.controls.id_cobertura.hasError('required') && form.controls.id_cobertura.touched) {
+      @if (form.controls.id_cobertura.hasError('required') && intentoEnviar()) {
         <mat-error>Seleccioná una cobertura</mat-error>
       }
     </mat-form-field>

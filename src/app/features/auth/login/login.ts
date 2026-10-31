@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AuthService } from '../../../core/services/auth';
 import { Rol } from '../../../core/models/usuario.model';
+import { SoloAlEnviarErrorStateMatcher } from '../../../core/utils/error-state.util';
 
 const RUTA_POR_ROL: Record<Rol, string> = {
   admin: '/admin',
@@ -39,6 +40,8 @@ export class Login {
 
   readonly cargando = signal(false);
   readonly errorMensaje = signal<string | null>(null);
+  readonly intentoEnviar = signal(false);
+  readonly matcher = new SoloAlEnviarErrorStateMatcher(() => this.intentoEnviar());
 
   readonly form = this.fb.group({
     dni: ['', [Validators.required, Validators.pattern(/^\d{7,9}$/)]],
@@ -46,6 +49,8 @@ export class Login {
   });
 
   enviar(): void {
+    this.intentoEnviar.set(true);
+
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
